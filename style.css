@@ -612,7 +612,7 @@ h3 {
 }
 
 .icon_unclicked {
-	filter: grayscale() brightness(70%) !important;
+	filter: grayscale() brightness(50%) !important;
 	transition: 0.2s;
 }
 
