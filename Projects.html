@@ -24,6 +24,7 @@
 
         window.addEventListener('load', function () {
             screen_detect();
+            $('#Transition').delay(200).fadeOut(400);
         });
 
         $(window).resize(function () {
@@ -1196,7 +1197,7 @@
                     var loader = new THREE.GLTFLoader();
 
                     loader.load(
-                        'assets/profil.glb',
+                        'assets/3d_head/profil.gltf',
                         function (gltf) {
 
                             object = gltf.scene;
@@ -1217,11 +1218,6 @@
                                     action.clampWhenFinished = true
                                     action.play()
                                 }, 700);
-                            }
-                        },
-                        function (loaded) {
-                            if (loaded.total == loaded.loaded) {
-                                $('#Transition').delay(200).fadeOut(400);
                             }
                         }
                     );

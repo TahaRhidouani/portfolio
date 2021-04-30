@@ -835,9 +835,8 @@
                     var loader = new THREE.GLTFLoader();
 
                     loader.load(
-                        'assets/profil.glb',
+                        'assets/3d_head/profil.gltf',
                         function (gltf) {
-
                             object = gltf.scene;
                             if (mobile) {
                                 object.scale.set(2, 2, 2);
@@ -849,6 +848,8 @@
                             mixer = new THREE.AnimationMixer(gltf.scene);
                             clips = gltf.animations;
                             scene.add(object);
+                            $(".intro").delay(100).fadeOut(200);
+                            $(".intro_bg").delay(100).fadeOut(200);
                             if (mobile) {
                                 setTimeout(function () {
                                     action = mixer.clipAction(clips[1]);
@@ -856,12 +857,6 @@
                                     action.clampWhenFinished = true
                                     action.play()
                                 }, 700);
-                            }
-                        },
-                        function (loaded) {
-                            if (loaded.total == loaded.loaded) {
-                                $(".intro").delay(500).fadeOut(200);
-                                $(".intro_bg").delay(500).fadeOut(200);
                             }
                         }
                     );
