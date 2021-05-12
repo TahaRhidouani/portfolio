@@ -1,5 +1,5 @@
 <?php
-    require_once ("assets/phpmailer/PHPMailerAutoload.php");
+    require_once ("../assets/phpmailer/PHPMailerAutoload.php");
     
     if(isSet($_POST['status']) && $_POST['status'] == 'submit' && isSet($_POST['firstname']) && $_POST['firstname'] != '' && isSet($_POST['lastname']) && $_POST['lastname'] != '' && isSet($_POST['email']) && $_POST['email'] != '' && isSet($_POST['subject']) && $_POST['subject'] != '' && isSet($_POST['message']) && $_POST['message'] != ''){
         $firstname=filter_var($_POST['firstname'], FILTER_SANITIZE_STRING);
@@ -18,7 +18,7 @@
             $mail->Port = '465';
             $mail->IsHTML();
             $mail->Username = 'taha.rhidouani@gmail.com';
-            $mail->Password = fgets(fopen("password", "r"));
+            $mail->Password = fgets(fopen("../password", "r"));
             $mail->SetFrom('no-reply@taharhidouani.com');
             $mail->Subject = $subject;
             $mail->Body = "<Strong>Name:</Strong> ".$firstname." ".$lastname."<br><Strong>Subject:</Strong> ".$subject."<br><Strong>Email:</Strong> ".$email."<br><br><Strong>Message:</Strong><br>".$msg;

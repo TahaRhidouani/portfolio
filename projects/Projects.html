@@ -8,9 +8,9 @@
         content="Welcome to the portfolio of Taha Rhidouani, a computer scientist with experience in multiple programming fields.">
     <title id="title">Taha Rhidouani - Projects</title>
 
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../style.css">
     <link rel='stylesheet' href='https://pro.fontawesome.com/releases/v5.6.3/css/all.css'>
-    <link rel="icon" type="image/icon" href="assets/images/icons/Icon (Dark).png" id="Icon" />
+    <link rel="icon" type="image/icon" href="../assets/images/icons/Icon (Dark).png" id="Icon" />
 
     <script src="https://unpkg.com/three@0.87.1/build/three.js"></script>
     <script src="https://unpkg.com/three@0.87.1/examples/js/loaders/GLTFLoader.js"></script>
@@ -674,14 +674,14 @@
             }
         </style>
         <section class="navbar">
-            <a id="logo" href="index.html"></a>
+            <a id="logo" href="../"></a>
             <div id="desktop_nav">
-                <img id="verticalseperator" href="index.html" src="assets/images/line.png">
-                <div class="navbutton"> <a rel="prerender" class="linkbuttons" id="projects" href="Projects.html"><span
+                <img id="verticalseperator" href="../" src="../assets/images/line.png">
+                <div class="navbutton"> <a rel="prerender" class="linkbuttons" id="projects" href="../projects/"><span
                             class="linkbuttonspan" id="projectspan"></span>Projects</a></div>
-                <div class="navbutton"><a rel="prerender" class="linkbuttons" id="aboutme" href="Aboutme.html"><span
+                <div class="navbutton"><a rel="prerender" class="linkbuttons" id="aboutme" href="../aboutme/"><span
                             class="linkbuttonspan" id="aboutmespan"></span>About Me</a></div>
-                <div class="navbutton"><a rel="prerender" class="linkbuttons" id="contactme" href="Contactme.html"><span
+                <div class="navbutton"><a rel="prerender" class="linkbuttons" id="contactme" href="../contactme/"><span
                             class="linkbuttonspan" id="contactmespan"></span>Contact Me</a></div>
                 <div class="theme_switcher">
                     <div class="ModeSelector light fal fa-sun"></div>
@@ -742,21 +742,21 @@
                     <table class="nav_table" border="0" align="center" style="padding: 125px 0px 0px 0px;">
                         <tr>
                             <td>
-                                <a class="mobile_button" href="Projects.html">
+                                <a class="mobile_button" href="../projects/">
                                     <li class="nav__list-item mobilenavlink">Projects</li>
                                 </a>
                             </td>
                         </tr>
                         <tr>
                             <td>
-                                <a class="mobile_button" href="Aboutme.html">
+                                <a class="mobile_button" href="../aboutme/">
                                     <li class="nav__list-item mobilenavlink">About Me</li>
                                 </a>
                             </td>
                         </tr>
                         <tr>
                             <td>
-                                <a class="mobile_button" href="Contactme.html">
+                                <a class="mobile_button" href="../contactme/">
                                     <li class="nav__list-item mobilenavlink">Contact Me</li>
                                 </a>
                             </td>
@@ -776,9 +776,9 @@
 
             $(window).on('load', function LoadColor() {
                 if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-                    document.getElementById("Icon").href = "assets/images/icons/Icon (Light).png";
+                    document.getElementById("Icon").href = "../assets/images/icons/Icon (Light).png";
                 } else {
-                    document.getElementById("Icon").href = "assets/images/icons/Icon (Dark).png";
+                    document.getElementById("Icon").href = "../assets/images/icons/Icon (Dark).png";
                 }
 
                 ColorMode = localStorage.getItem("ColorMode");
@@ -1197,7 +1197,7 @@
                     var loader = new THREE.GLTFLoader();
 
                     loader.load(
-                        'assets/3d_head/profil.gltf',
+                        '../assets/3d_head/profil.gltf',
                         function (gltf) {
 
                             object = gltf.scene;
@@ -1481,13 +1481,13 @@
         </div>
 
         <div>
-            <img class="bg_images" id="img_1" src="assets/images/shapes/waves.png">
-            <img class="bg_images" id="img_2" src="assets/images/shapes/cube.png">
-            <img class="bg_images" id="img_3" src="assets/images/shapes/worm.png">
-            <img class="bg_images" id="img_4" src="assets/images/shapes/arrows.png">
-            <img class="bg_images" id="img_5" src="assets/images/shapes/cube2.png">
-            <img class="bg_images" id="img_6" src="assets/images/shapes/square.png">
-            <img class="bg_images" id="img_7" src="assets/images/shapes/pyramid.png">
+            <img class="bg_images" id="img_1" src="../assets/images/shapes/waves.png">
+            <img class="bg_images" id="img_2" src="../assets/images/shapes/cube.png">
+            <img class="bg_images" id="img_3" src="../assets/images/shapes/worm.png">
+            <img class="bg_images" id="img_4" src="../assets/images/shapes/arrows.png">
+            <img class="bg_images" id="img_5" src="../assets/images/shapes/cube2.png">
+            <img class="bg_images" id="img_6" src="../assets/images/shapes/square.png">
+            <img class="bg_images" id="img_7" src="../assets/images/shapes/pyramid.png">
 
             <script type="text/javascript">
                 $(window).on("scroll", function () {
@@ -1535,14 +1535,14 @@
                     <tr>
                         <td>
                             <div class="development">
-                                <img class="programming_icons" id="ai" src="assets/images/icons/dev_fields/ai.png">
-                                <img class="programming_icons" id="web" src="assets/images/icons/dev_fields/web.png">
+                                <img class="programming_icons" id="ai" src="../assets/images/icons/dev_fields/ai.png">
+                                <img class="programming_icons" id="web" src="../assets/images/icons/dev_fields/web.png">
                                 <img class="programming_icons" id="mobile"
-                                    src="assets/images/icons/dev_fields/mobile.png">
+                                    src="../assets/images/icons/dev_fields/mobile.png">
                                 <img class="programming_icons" id="desktop"
-                                    src="assets/images/icons/dev_fields/desktop.png">
+                                    src="../assets/images/icons/dev_fields/desktop.png">
                                 <img class="programming_icons" id="backend"
-                                    src="assets/images/icons/dev_fields/database.png">
+                                    src="../assets/images/icons/dev_fields/database.png">
                             </div>
                         </td>
                     </tr>
@@ -1582,12 +1582,12 @@
                 </div>
                 <div class="section_img_block selectable_img">
                     <video class="section_img" playsinline loop muted>
-                        <source src="assets/images/projects/hockeypool.mp4" type="video/mp4">
+                        <source src="../assets/images/projects/hockeypool.mp4" type="video/mp4">
                     </video>
                     <div class="section_fade"></div>
                 </div>
                 <div class="section_bg"></div>
-                <img class="close_section" src="assets/images/icons/development/+.png">
+                <img class="close_section" src="../assets/images/icons/development/+.png">
             </div>
         </div>
 
@@ -1614,12 +1614,12 @@
                 </div>
                 <div class="section_img_block selectable_img">
                     <video class="section_img" playsinline loop muted>
-                        <source src="assets/images/projects/cseo.mp4" type="video/mp4">
+                        <source src="../assets/images/projects/cseo.mp4" type="video/mp4">
                     </video>
                     <div class="section_fade"></div>
                 </div>
                 <div class="section_bg"></div>
-                <img class="close_section" src="assets/images/icons/development/+.png">
+                <img class="close_section" src="../assets/images/icons/development/+.png">
             </div>
         </div>
 
@@ -1647,12 +1647,12 @@
                 </div>
                 <div class="section_img_block selectable_img">
                     <video class="section_img" playsinline loop muted>
-                        <source src="assets/images/projects/hyun.mp4" type="video/mp4">
+                        <source src="../assets/images/projects/hyun.mp4" type="video/mp4">
                     </video>
                     <div class="section_fade"></div>
                 </div>
                 <div class="section_bg"></div>
-                <img class="close_section" src="assets/images/icons/development/+.png">
+                <img class="close_section" src="../assets/images/icons/development/+.png">
             </div>
         </div>
 
@@ -1682,12 +1682,12 @@
                 </div>
                 <div class="section_img_block selectable_img">
                     <video class="section_img" playsinline loop muted>
-                        <source src="assets/images/projects/triplebros.mp4" type="video/mp4">
+                        <source src="../assets/images/projects/triplebros.mp4" type="video/mp4">
                     </video>
                     <div class="section_fade"></div>
                 </div>
                 <div class="section_bg"></div>
-                <img class="close_section" src="assets/images/icons/development/+.png">
+                <img class="close_section" src="../assets/images/icons/development/+.png">
             </div>
         </div>
 
