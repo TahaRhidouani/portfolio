@@ -2,3 +2,6 @@
 /projects/hockeypool
 /projects/hyun
 password
+projects/.DS_Store
+.well-known/apple-developer-merchantid-domain-association
+.gitignore

@@ -41,6 +41,9 @@
             $("canvas").css("left", ($(window).width() - ($(window).width() * 0.45)) + "px");
 
             if (mobile) {
+                $(".intro").delay(100).fadeOut(200);
+                $(".intro_bg").delay(100).fadeOut(200);
+                
                 $("canvas").css("transform", "translate(-50%, -50%)");
                 $("canvas").css("left", "50%");
                 $(".nav__content").css("display", "none");
@@ -60,6 +63,7 @@
                 $("#face_model").css("width", "100%");
                 $("#face_model").css("height", "40%");
                 $("#face_model").css("bottom", "0");
+                $("#memoji_video").css("display", "block");
                 $("#section_one").css("height", "calc(60% - 150px)");
                 $("#section_one").css("top", "auto");
                 $("#contact_info").css("right", "");
@@ -87,6 +91,8 @@
                 $("#section_two").css("margin-top", "0px");
                 $("#section_two_view").css("margin-top", "0px");
                 $("#message_input").css("height", "8em");
+                $("#memoji_video").html('<source src="/assets/memoji/memoji.mov" type="video/mp4; codecs="hvc1""> <source src="/assets/memoji/memoji.webm" type="video/webm">')
+                $("#memoji_video")[0].load()
             } else {
                 $(function () {
                     var prefix = function () {
@@ -775,6 +781,10 @@
         </script>
 
         <div id="face_model">
+
+            <video id="memoji_video" width="600" height="100%" autoplay loop muted playsinline>
+            </video>
+
             <script type="module">
 
                 var container,
@@ -797,8 +807,10 @@
                     y: 0
                 };
 
-                load();
-                animate();
+                if (!mobile) {
+                    load();
+                    animate();
+                }
 
                 function load() {
 
@@ -843,24 +855,11 @@
                         function (gltf) {
 
                             object = gltf.scene;
-                            if (mobile) {
-                                object.scale.set(2, 2, 2);
-                                object.position.set(0, 0, 0);
-                            } else {
-                                object.scale.set(1.8, 1.8, 1.8);
-                                object.position.set(0, 0, 0);
-                            }
+                            object.scale.set(1.8, 1.8, 1.8);
+                            object.position.set(0, 0, 0);
                             mixer = new THREE.AnimationMixer(gltf.scene);
                             clips = gltf.animations;
                             scene.add(object);
-                            if (mobile) {
-                                setTimeout(function () {
-                                    action = mixer.clipAction(clips[1]);
-                                    action.setLoop(THREE.LoopOnce)
-                                    action.clampWhenFinished = true
-                                    action.play()
-                                }, 700);
-                            }
                         },
                         function (loaded) {
                             if (loaded.total == loaded.loaded) {

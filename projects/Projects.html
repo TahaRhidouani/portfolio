@@ -41,6 +41,10 @@
 
             if (mobile) {
                 SmallScreen = true
+                
+                $(".intro").delay(100).fadeOut(200);
+                $(".intro_bg").delay(100).fadeOut(200);
+
                 $("canvas").css("transform", "translate(-50%, -50%)");
                 $("canvas").css("left", "50%");
                 $(".nav__content").css("display", "none");
@@ -60,6 +64,7 @@
                 $("#face_model").css("width", "100%");
                 $("#face_model").css("height", "40%");
                 $("#face_model").css("bottom", "0");
+                $("#memoji_video").css("display", "block");
                 $("#section_one").css("height", "calc(60% - 150px)");
                 $("#section_one").css("top", "auto");
                 $("#section_one").css("position", "fixed");
@@ -97,6 +102,8 @@
                 $(".close_section").css("width", "5em");
                 $(".section_text").css("text-align", "center");
                 $(".buttons").css("transform", "translate(-50%, 0%)");
+                $("#memoji_video").html('<source src="/assets/memoji/memoji.mov" type="video/mp4; codecs="hvc1""> <source src="/assets/memoji/memoji.webm" type="video/webm">')
+                $("#memoji_video")[0].load()
             } else {
                 $(function () {
                     var prefix = function () {
@@ -1051,7 +1058,7 @@
                         $('#section_one').fadeOut(200)
                         $('.sections:not(#' + scroll_section_scrollbar_rounded + ')').fadeOut(200)
                         $('#' + scroll_section_scrollbar_rounded).fadeIn(200)
-                        $('video:not(#vid_' + scroll_section_scrollbar_rounded + ')')[0].pause();
+                        $('video:not(#vid_' + scroll_section_scrollbar_rounded + ', #memoji_video)')[0].pause();
                         $('#vid_' + scroll_section_scrollbar_rounded)[0].play();
                     }
                 } else {
@@ -1108,13 +1115,13 @@
                             $("html, body").animate({ scrollTop: ((scroll_section_scrollbar_rounded) * ($(window).height() + 300)) }, 300);
                             $(".total_bar").removeClass("scaleup");
                             $(".cursor").removeClass("zooming");
-                            $('video:not(#vid_' + scroll_section_scrollbar_rounded + ')')[0].pause();
+                            $('video:not(#vid_' + scroll_section_scrollbar_rounded + ', #memoji_video)')[0].pause();
                             $('#vid_' + scroll_section_scrollbar_rounded)[0].play();
                         }
                     }, 600);
 
                     if (scroll_section_rounded != 0) {
-                        $('video:not(#vid_' + scroll_section_scrollbar_rounded + ')')[0].pause();
+                        $('video:not(#vid_' + scroll_section_scrollbar_rounded + ', #memoji_video)')[0].pause();
                         $('#vid_' + scroll_section_scrollbar_rounded)[0].play();
                     }
                 }
@@ -1133,6 +1140,10 @@
         </script>
 
         <div id="face_model">
+
+            <video id="memoji_video" width="600" height="100%" autoplay loop muted playsinline>
+            </video>
+
             <script type="module">
 
                 var container,
@@ -1155,8 +1166,10 @@
                     y: 0
                 };
 
-                load();
-                animate();
+                if (!mobile) {
+                    load();
+                    animate();
+                }
 
                 function load() {
 
@@ -1201,24 +1214,11 @@
                         function (gltf) {
 
                             object = gltf.scene;
-                            if (mobile) {
-                                object.scale.set(2, 2, 2);
-                                object.position.set(0, 0, 0);
-                            } else {
-                                object.scale.set(1.8, 1.8, 1.8);
-                                object.position.set(0, 0, 0);
-                            }
+                            object.scale.set(1.8, 1.8, 1.8);
+                            object.position.set(0, 0, 0);
                             mixer = new THREE.AnimationMixer(gltf.scene);
                             clips = gltf.animations;
                             scene.add(object);
-                            if (mobile) {
-                                setTimeout(function () {
-                                    action = mixer.clipAction(clips[1]);
-                                    action.setLoop(THREE.LoopOnce)
-                                    action.clampWhenFinished = true
-                                    action.play()
-                                }, 700);
-                            }
                         }
                     );
                     document.addEventListener('mousemove', onMouseMove, false);
@@ -1659,9 +1659,9 @@
         <div class="sections mobile">
             <div class="section_view">
                 <h2 class="section_title">Triple Bros</h2>
-                <h3 class="section_desc">A mobile multiplayer & campagne platformer game.</h3>
+                <h3 class="section_desc">A mobile multiplayer & campagn platformer game.</h3>
                 <h3 class="section_text">Triple Bros is a mobile game coded using C# and pushed to the Android's Google
-                    Play Store and iOS's App Store. The game's campagne mode has 10 levels that each have 3 difficulty
+                    Play Store and iOS's App Store. The game's campagn mode has 10 levels that each have 3 difficulty
                     level and multiple character upgrades. There is also a multiplayer battles mode where you can play
                     1v1 against your friend or 2v2 with a squad. The game was made for the personal project for the IB
                     program in 10th grade, hence the presence of multiple teachers as the characters and the location of
