@@ -1,10 +1,17 @@
 # Portfolio website
-This is a personal portfolio website I made to showcase all my projects and information about me. The website can be viewed [here](http://www.taharhidouani.com).
 
-![Image 1](https://github.com/TahaInc/portfolio/blob/main/Screenshots/Screenshot_1.png?raw=true)
+This is a personal portfolio website I made to showcase all my projects and information about me.
 
-![Image 2](https://github.com/TahaInc/portfolio/blob/main/Screenshots/Screenshot_2.png?raw=true)
+![main](https://raw.githubusercontent.com/TahaInc/portfolio/master/images/screenshot_1.png)
 
-![Image 3](https://github.com/TahaInc/portfolio/blob/main/Screenshots/Screenshot_3.png?raw=true)
+![work list](https://raw.githubusercontent.com/TahaInc/portfolio/master/images/screenshot_2.png)
 
-![Image 4](https://github.com/TahaInc/portfolio/blob/main/Screenshots/Screenshot_4.png?raw=true)
+![work details](https://raw.githubusercontent.com/TahaInc/portfolio/master/images/screenshot_3.png)
+
+![projects list](https://raw.githubusercontent.com/TahaInc/portfolio/master/images/screenshot_4.png)
+
+![projects details](https://raw.githubusercontent.com/TahaInc/portfolio/master/images/screenshot_5.png)
+
+![about me](https://raw.githubusercontent.com/TahaInc/portfolio/master/images/screenshot_6.png)
+
+![more projects](https://raw.githubusercontent.com/TahaInc/portfolio/master/images/screenshot_7.png)
