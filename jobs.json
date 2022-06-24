@@ -1,0 +1,52 @@
+[
+  {
+    "name": "RCMP",
+    "role": "Junior Web Publisher",
+    "date": "May 2022 - Current",
+    "logo": "/rcmp/logo.png",
+    "github": null,
+    "demo": null,
+    "description": ["Create manuals & policy web pages that reached over 19,000 officers", "Strategized possible server configurations for revamped interface"],
+    "image": ""
+  },
+  {
+    "name": "Pool Party",
+    "role": "Full Stack Developer",
+    "date": "Mar 2022 - Jun 2022",
+    "logo": "/poolparty/logo.png",
+    "github": null,
+    "demo": null,
+    "description": ["Designing an animated UI for a casino game", "Programming a backend to support multiplayer using web sockets"],
+    "image": ""
+  },
+  {
+    "name": "Venture Pixel",
+    "role": "Full Stack Developer",
+    "date": "Jun 2021 - Oct 2021",
+    "logo": "/venturepixel/logo.png",
+    "github": "https://github.com/TahaInc/venture-pixel",
+    "demo": "https://taharhidouani.com/projects/venturepixel/home.html",
+    "description": ["Designing a modern and responsive UI for a photography company", "Built a payment system using Stripe which also sends confirmation", "Developed a backend to have order details available to owner"],
+    "image": "/venturepixel/screenshot.gif"
+  },
+  {
+    "name": "CSEO",
+    "role": "Web Developer",
+    "date": "Dec 2018 - May 2019",
+    "logo": "/cseo/logo.png",
+    "github": "https://github.com/TahaInc/cseo",
+    "demo": "https://www.taharhidouani.com/projects/cseo/",
+    "description": ["Redesigning a soccer league website to feature a modernized UI", "Developed the backend to have registration details available to owner"],
+    "image": "/cseo/screenshot.gif"
+  },
+  {
+    "name": "HYUN",
+    "role": "Full Stack Developer",
+    "date": "Apr 2019 - Jul 2019",
+    "logo": "/hyun/logo.png",
+    "github": "https://github.com/TahaInc/hyun",
+    "demo": "https://www.taharhidouani.com/projects/hyun/",
+    "description": ["Designing a e-commerce website with custom product pages", "Implementing a payment system using Paypal which also sends order detail to supplier and confirmation to customer"],
+    "image": "/hyun/screenshot.gif"
+  }
+]

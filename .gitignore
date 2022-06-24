@@ -1,9 +1,3 @@
-/projects/cseo
-/projects/hockeypool
-/projects/hyun
-password
-projects/.DS_Store
-.well-known/apple-developer-merchantid-domain-association
-.gitignore
-projects/venturepixel
-projects/venturepixel
+/node_modules
+github-api
+.DS_Store
