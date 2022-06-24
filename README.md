@@ -1,6 +1,6 @@
 # Portfolio website
 
-This is a personal portfolio website I made to showcase all my projects and information about me.
+This is a personal portfolio website I made to showcase all my projects, work experience and socials.
 
 ![main](https://raw.githubusercontent.com/TahaInc/portfolio/master/images/screenshot_1.png)
 
