@@ -51,9 +51,10 @@ function init() {
       for (let id in projects) {
         projectListContent =
           `
-            <a href="${projects[id].url}" target="_blank" class="card" onclick="openProject(${id})">
-              <video playsinline loop muted autoplay>
+            <a href="${projects[id].url}" target="_blank" class="card">
+              <video id="project_preview_${id}" playsinline loop muted autoplay>
                 <source src="${projects[id].trailer}" type="video/mp4">
+                Your browser does not support the video tag.
               </video>
               <div class="text_wrapper">
                   <h2 class="highlight">${projects[id].name}</h2>
