@@ -525,7 +525,7 @@ li {
 
 #horizontal_list_wrapper {
   height: 50%;
-  min-height: 600px;
+  max-height: 80vh;
   width: calc(100% + 80px);
   left: -100px;
   white-space: nowrap;
