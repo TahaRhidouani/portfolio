@@ -25,7 +25,7 @@
     "date": "Jun 2021 - Oct 2021",
     "logo": "/venturepixel/logo.png",
     "github": "https://github.com/TahaInc/venture-pixel",
-    "demo": "https://taharhidouani.com/projects/venturepixel/home.html",
+    "demo": "https://taharhidouani.com/projects/venture-pixel/",
     "description": ["Designing a modern and responsive UI for a photography company", "Built a payment system using Stripe which also sends confirmation", "Developed a backend to have order details available to owner"],
     "image": "/venturepixel/screenshot.gif"
   },
