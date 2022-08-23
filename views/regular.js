@@ -1,8 +1,9 @@
 // Variables
 let scroll = new LocomotiveScroll({ el: document.querySelector("body"), smooth: true, getDirection: true, multiplier: 1, tablet: { smooth: true }, smartphone: { smooth: true } });
-let jobs, projects, moreprojects, totalWork, sectionProgress, hasScrolled, target, container, cursor, scene, camera, renderer, vector, object, mixer, action, clips, clock, timer, smiling, lastEvent;
+let jobs, projects, moreprojects, totalWork, benchmarkLoops, initialTime, fps, sectionProgress, hasScrolled, target, container, cursor, scene, camera, renderer, vector, object, mixer, action, clips, clock, timer, smiling, lastEvent;
 let mouse = { x: 0, y: 0 };
 let noiseCanvas = document.getElementById("noise").getContext("2d");
+let deviceSlownessFactor = 5;
 
 scroll.stop();
 init();
@@ -189,6 +190,31 @@ function init() {
         setTimeout(() => {
           if (!hasScrolled) document.getElementById("scroll_tutorial").classList.remove("hidden");
         }, 8000);
+
+        benchmarkLoops = 0;
+        initialTime = Date.now();
+
+        // Initial benchmarking to disable unnecessary visual effects on slow devices
+        requestAnimationFrame(function benchmark() {
+          let currentTime = Date.now();
+          fps = Math.round(1000 / (currentTime - initialTime));
+          initialTime = currentTime;
+          benchmarkLoops++;
+
+          if (benchmarkLoops > 80) return;
+
+          if (benchmarkLoops > 60 && fps < 15) {
+            deviceSlownessFactor = 100;
+          } else if (benchmarkLoops > 60 && fps < 30) {
+            deviceSlownessFactor = 20;
+          } else if (benchmarkLoops > 60 && fps < 40) {
+            deviceSlownessFactor = 10;
+          } else if (benchmarkLoops > 60 && fps < 50) {
+            deviceSlownessFactor = 7;
+          } else {
+            requestAnimationFrame(benchmark);
+          }
+        });
       });
   });
 }
@@ -275,7 +301,9 @@ function noise(noiseCanvas) {
   let imageData = new Uint32Array(image.data.buffer);
   let imageLength = imageData.length;
 
-  for (let i = 0; i < imageLength / 5; i += 1) imageData[Math.floor(Math.random() * imageLength)] = 0xffffffff;
+  if (deviceSlownessFactor < 100) {
+    for (let i = 0; i < imageLength / deviceSlownessFactor; i += 1) imageData[Math.floor(Math.random() * imageLength)] = 0xffffffff;
+  }
 
   noiseCanvas.putImageData(image, 0, 0);
 }
