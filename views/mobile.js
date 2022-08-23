@@ -1,5 +1,5 @@
 // Variables
-let jobs, projects, moreprojects, hasScrolled;
+let jobs, projects, moreprojects, totalWork, hasScrolled;
 
 init();
 
@@ -35,7 +35,8 @@ function init() {
       jobs = data[0];
       let jobsList = document.getElementById("work_list");
       let jobListClasses = ["current", "back", "backback"];
-      for (let i = 0; i < jobs.length; i++) {
+      totalWork = jobs.length;
+      for (let i = 0; i < totalWork; i++) {
         jobsList.innerHTML += `
                 <div id="${i + 1}" class="work ${i < jobListClasses.length ? jobListClasses[i] : "hidden"}">
                   <h2 class="title">${jobs[i].name}</h2>
@@ -100,20 +101,25 @@ function getAge(b) {
 }
 
 let workIndex = 1;
-let totalWork = 5;
 let upDisabled = false;
 let downDisabled = false;
 
 function jobUp() {
   if (upDisabled) return;
-  if (workIndex == 2) document.getElementById("up_arrow").classList.add("hidden");
 
   workIndex--;
 
   document.getElementById("down_arrow").classList.remove("hidden");
+  downDisabled = false;
 
   upDisabled = true;
-  setTimeout(() => (upDisabled = false), 300);
+
+  if (workIndex == 1) {
+    document.getElementById("up_arrow").classList.add("hidden");
+    upDisabled = true;
+  } else {
+    setTimeout(() => (upDisabled = false), 300);
+  }
 
   document.getElementById(workIndex)?.classList.add("current");
   document.getElementById(workIndex)?.classList.remove("forward");
@@ -130,12 +136,18 @@ function jobUp() {
 
 function jobDown() {
   if (downDisabled) return;
-  if (workIndex == totalWork - 1) document.getElementById("down_arrow").classList.add("hidden");
 
   document.getElementById("up_arrow").classList.remove("hidden");
+  upDisabled = false;
 
   downDisabled = true;
-  setTimeout(() => (downDisabled = false), 300);
+
+  if (workIndex == totalWork - 1) {
+    document.getElementById("down_arrow").classList.add("hidden");
+    downDisabled = true;
+  } else {
+    setTimeout(() => (downDisabled = false), 300);
+  }
 
   document.getElementById(workIndex)?.classList.remove("current");
   document.getElementById(workIndex)?.classList.add("forward");

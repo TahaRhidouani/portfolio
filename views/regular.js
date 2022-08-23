@@ -1,6 +1,6 @@
 // Variables
 let scroll = new LocomotiveScroll({ el: document.querySelector("body"), smooth: true, getDirection: true, multiplier: 1, tablet: { smooth: true }, smartphone: { smooth: true } });
-let jobs, projects, moreprojects, sectionProgress, hasScrolled, target, container, cursor, scene, camera, renderer, vector, object, mixer, action, clips, clock, timer, smiling, lastEvent;
+let jobs, projects, moreprojects, totalWork, sectionProgress, hasScrolled, target, container, cursor, scene, camera, renderer, vector, object, mixer, action, clips, clock, timer, smiling, lastEvent;
 let mouse = { x: 0, y: 0 };
 let noiseCanvas = document.getElementById("noise").getContext("2d");
 
@@ -98,7 +98,8 @@ function init() {
         jobs = data[0];
         let jobsList = document.getElementById("work_list");
         let jobListClasses = ["current", "back", "backback"];
-        for (let i = 0; i < jobs.length; i++) {
+        totalWork = jobs.length;
+        for (let i = 0; i < totalWork; i++) {
           jobsList.innerHTML += `
             <div id="${i + 1}" class="work ${i < jobListClasses.length ? jobListClasses[i] : "hidden"}">
               <h2 class="title">${jobs[i].name}</h2>
@@ -163,8 +164,12 @@ function init() {
         });
 
         document.querySelectorAll(".focus").forEach((element) => {
-          element.addEventListener("mouseenter", () => cursor.classList.add("zoom"));
-          element.addEventListener("mouseleave", () => cursor.classList.remove("zoom"));
+          element.addEventListener("mouseenter", (e) => {
+            if (!e.target.classList.contains("hidden")) cursor.classList.add("zoom");
+          });
+          element.addEventListener("mouseleave", () => {
+            cursor.classList.remove("zoom");
+          });
         });
 
         document.querySelectorAll(".hide").forEach((element) => {
@@ -296,20 +301,26 @@ function viewResume() {
 }
 
 let workIndex = 1;
-let totalWork = 5;
-let upDisabled = false;
+let upDisabled = true;
 let downDisabled = false;
 
 function jobUp() {
   if (upDisabled) return;
-  if (workIndex == 2) document.getElementById("up_arrow").classList.add("hidden");
 
   workIndex--;
 
   document.getElementById("down_arrow").classList.remove("hidden");
+  downDisabled = false;
 
   upDisabled = true;
-  setTimeout(() => (upDisabled = false), 300);
+
+  if (workIndex == 1) {
+    document.getElementById("up_arrow").classList.add("hidden");
+    upDisabled = true;
+    cursor.classList.remove("zoom");
+  } else {
+    setTimeout(() => (upDisabled = false), 300);
+  }
 
   document.getElementById(workIndex)?.classList.add("current");
   document.getElementById(workIndex)?.classList.remove("forward");
@@ -326,12 +337,19 @@ function jobUp() {
 
 function jobDown() {
   if (downDisabled) return;
-  if (workIndex == totalWork - 1) document.getElementById("down_arrow").classList.add("hidden");
 
   document.getElementById("up_arrow").classList.remove("hidden");
+  upDisabled = false;
 
   downDisabled = true;
-  setTimeout(() => (downDisabled = false), 300);
+
+  if (workIndex == totalWork - 1) {
+    document.getElementById("down_arrow").classList.add("hidden");
+    downDisabled = true;
+    cursor.classList.remove("zoom");
+  } else {
+    setTimeout(() => (downDisabled = false), 300);
+  }
 
   document.getElementById(workIndex)?.classList.remove("current");
   document.getElementById(workIndex)?.classList.add("forward");
