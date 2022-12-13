@@ -64,7 +64,10 @@ function refreshProjects() {
         let url = p.html_url.split("/")[4];
         let name = p.name
           .split("-")
-          .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+          .map((word) => {
+            if (word == "ai") return "AI";
+            else word.charAt(0).toUpperCase() + word.slice(1);
+          })
           .join(" ");
 
         if (blacklistedProjects.includes(name)) continue;
@@ -86,7 +89,10 @@ function refreshProjects() {
           for (let p of data) {
             let name = p.name
               .split("-")
-              .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+              .map((word) => {
+                if (word == "ai") return "AI";
+                else word.charAt(0).toUpperCase() + word.slice(1);
+              })
               .join(" ");
 
             if (!starredIds.includes(p.id) && !jobProjects.includes(name.toLowerCase()) && !blacklistedProjects.includes(name)) {
