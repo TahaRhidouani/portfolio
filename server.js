@@ -66,7 +66,7 @@ function refreshProjects() {
           .split("-")
           .map((word) => {
             if (word == "ai") return "AI";
-            else word.charAt(0).toUpperCase() + word.slice(1);
+            else return word.charAt(0).toUpperCase() + word.slice(1);
           })
           .join(" ");
 
@@ -91,7 +91,7 @@ function refreshProjects() {
               .split("-")
               .map((word) => {
                 if (word == "ai") return "AI";
-                else word.charAt(0).toUpperCase() + word.slice(1);
+                else return word.charAt(0).toUpperCase() + word.slice(1);
               })
               .join(" ");
 
