@@ -2,51 +2,51 @@
   {
     "name": "RCMP",
     "role": "Junior Web Publisher",
-    "date": "May 2022 - Current",
+    "date": "May 2022 - Dec 2022",
     "logo": "/rcmp/logo.png",
     "github": null,
     "demo": null,
-    "description": ["Create manuals & policy web pages that reach over 30,000 employees", "Strategize future server configurations for a new revamped interface", "Organize presentations for other departments on many web standards (e.g. WCAG)"],
+    "description": ["Developed manuals & policy web pages reaching 30,000+ employees", "Refined & automated the code review process and reduced production issues by 90%", "Organized presentations on web standards & frameworks (e.g., WCAG 2.0, WET Toolkit)", "Participated in collaborative strategic planning for future server configurations"],
     "image": ""
   },
   {
     "name": "Pool Party",
-    "role": "Full Stack Developer",
+    "role": "Software Engineer",
     "date": "Mar 2022 - Jun 2022",
     "logo": "/poolparty/logo.png",
     "github": null,
     "demo": null,
-    "description": ["Designing an animated UI for a casino game", "Programming a backend to support multiplayer using web sockets"],
+    "description": ["Designed an animated UI for a casino game, based on Figma designs", "Developed & optimized backend using web sockets, enabling real-time multiplayer"],
     "image": ""
   },
   {
     "name": "Venture Pixel",
-    "role": "Full Stack Developer",
+    "role": "Fullstack Developer",
     "date": "Jun 2021 - Oct 2021",
     "logo": "/venturepixel/logo.png",
     "github": "https://github.com/TahaInc/venture-pixel",
     "demo": "https://taharhidouani.com/projects/venture-pixel/",
-    "description": ["Designing a modern and responsive UI for a photography company", "Built a payment system using Stripe which also sends confirmation", "Developed a backend to have order details available to owner"],
+    "description": ["Designed a modern and responsive website, generating positive survey feedback", "Integrated Stripe payment system, with photo upload and customer purchase feature"],
     "image": "/venturepixel/screenshot.gif"
+  },
+  {
+    "name": "HYUN",
+    "role": "Fullstack Developer",
+    "date": "Apr 2019 - Aug 2019",
+    "logo": "/hyun/logo.png",
+    "github": "https://github.com/TahaInc/hyun",
+    "demo": "https://www.taharhidouani.com/projects/hyun/",
+    "description": ["Built website with customized product pages, yielding exceptional customer ratings", "Integrated PayPal payment system, with automated order detail to supplier and customers"],
+    "image": "/hyun/screenshot.gif"
   },
   {
     "name": "CSEO",
     "role": "Web Developer",
-    "date": "Dec 2018 - May 2019",
+    "date": "Dec 2018 - Apr 2019",
     "logo": "/cseo/logo.png",
     "github": "https://github.com/TahaInc/cseo",
     "demo": "https://www.taharhidouani.com/projects/cseo/",
-    "description": ["Redesigning a soccer league website to feature a modernized UI", "Developed the backend to have registration details available to owner"],
+    "description": ["Redesigned & modernized website leading to a 200% online registration increase", "Designed an automated backend system, reducing processing time by 100%"],
     "image": "/cseo/screenshot.gif"
-  },
-  {
-    "name": "HYUN",
-    "role": "Full Stack Developer",
-    "date": "Apr 2019 - Jul 2019",
-    "logo": "/hyun/logo.png",
-    "github": "https://github.com/TahaInc/hyun",
-    "demo": "https://www.taharhidouani.com/projects/hyun/",
-    "description": ["Designing a e-commerce website with custom product pages", "Implementing a payment system using Paypal which also sends order detail to supplier and confirmation to customer"],
-    "image": "/hyun/screenshot.gif"
   }
 ]
