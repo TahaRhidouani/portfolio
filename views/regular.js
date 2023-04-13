@@ -2,8 +2,10 @@
 let scroll = new LocomotiveScroll({ el: document.querySelector("body"), smooth: true, getDirection: true, multiplier: 1, tablet: { smooth: true }, smartphone: { smooth: true } });
 let jobs, projects, moreprojects, totalWork, benchmarkLoops, initialTime, fps, sectionProgress, hasScrolled, target, container, cursor, scene, camera, renderer, vector, object, mixer, action, clips, clock, timer, smiling, lastEvent;
 let mouse = { x: 0, y: 0 };
-let noiseCanvas = document.getElementById("noise").getContext("2d");
+
+let SLOW_CUTOFF = 50;
 let deviceSlownessFactor = 5;
+let noiseCanvas = document.getElementById("noise");
 
 scroll.stop();
 init();
@@ -80,11 +82,6 @@ function init() {
     scene.add(object);
     clips = head.animations;
     container.appendChild(renderer.domElement);
-
-    calculatePerpective();
-    animate();
-    scroll.update();
-    noise(noiseCanvas);
 
     // Load responsive data (projects & jobs)
     Promise.all([fetch("/jobs"), fetch("/projects"), fetch("/moreprojects")])
@@ -180,6 +177,19 @@ function init() {
 
         document.querySelectorAll(".button_wrapper").forEach(magnetizeButtons);
 
+        // Benchmark to disable noise on slow devices
+        let start = new Date();
+        noise();
+        let end = new Date();
+
+        deviceSlownessFactor = end - start;
+        if (deviceSlownessFactor >= SLOW_CUTOFF) noiseCanvas.classList.add("hidden");
+        console.log("Your device slowness factor is (higher is slower): " + deviceSlownessFactor);
+
+        calculatePerpective();
+        scroll.update();
+        animate();
+
         // Fade out intro
         scroll.start();
         document.getElementById("intro").classList.add("hidden");
@@ -190,31 +200,6 @@ function init() {
         setTimeout(() => {
           if (!hasScrolled) document.getElementById("scroll_tutorial").classList.remove("hidden");
         }, 8000);
-
-        benchmarkLoops = 0;
-        initialTime = Date.now();
-
-        // Initial benchmarking to disable unnecessary visual effects on slow devices
-        requestAnimationFrame(function benchmark() {
-          let currentTime = Date.now();
-          fps = Math.round(1000 / (currentTime - initialTime));
-          initialTime = currentTime;
-          benchmarkLoops++;
-
-          if (benchmarkLoops > 80) return;
-
-          if (benchmarkLoops > 60 && fps < 15) {
-            deviceSlownessFactor = 100;
-          } else if (benchmarkLoops > 60 && fps < 30) {
-            deviceSlownessFactor = 20;
-          } else if (benchmarkLoops > 60 && fps < 40) {
-            deviceSlownessFactor = 10;
-          } else if (benchmarkLoops > 60 && fps < 50) {
-            deviceSlownessFactor = 7;
-          } else {
-            requestAnimationFrame(benchmark);
-          }
-        });
       });
   });
 }
@@ -239,7 +224,8 @@ function calculatePerpective() {
   size = 1 + container.offsetWidth / 2000;
   object.scale.set(size, size, size);
 
-  calculateNoiseSize();
+  noiseCanvas.width = window.innerWidth * window.devicePixelRatio;
+  noiseCanvas.height = window.innerHeight * window.devicePixelRatio;
 }
 
 function smile() {
@@ -274,9 +260,9 @@ function animate() {
   vector = new THREE.Vector3(target.x, target.y, 0.9);
   vector.unproject(camera);
 
-  if (document.visibilityState == "visible") noise(noiseCanvas);
-
   if (object) object.lookAt(vector);
+
+  if (deviceSlownessFactor < SLOW_CUTOFF) noise();
 
   requestAnimationFrame(animate);
   render();
@@ -290,22 +276,16 @@ function render() {
   renderer.render(scene, camera);
 }
 
-function calculateNoiseSize() {
-  let canvas = document.getElementById("noise");
-  canvas.width = window.innerWidth * window.devicePixelRatio;
-  canvas.height = window.innerHeight * window.devicePixelRatio;
-}
-
-function noise(noiseCanvas) {
-  let image = noiseCanvas.createImageData(window.innerWidth * window.devicePixelRatio, window.innerHeight * window.devicePixelRatio);
+function noise() {
+  let image = noiseCanvas.getContext("2d").createImageData(window.innerWidth * window.devicePixelRatio, window.innerHeight * window.devicePixelRatio);
   let imageData = new Uint32Array(image.data.buffer);
   let imageLength = imageData.length;
 
-  if (deviceSlownessFactor < 100) {
-    for (let i = 0; i < imageLength / deviceSlownessFactor; i += 1) imageData[Math.floor(Math.random() * imageLength)] = 0xffffffff;
+  for (let i = 0; i < imageLength / deviceSlownessFactor; i += 1) {
+    imageData[Math.floor(Math.random() * imageLength)] = 0xffffffff;
   }
 
-  noiseCanvas.putImageData(image, 0, 0);
+  noiseCanvas.getContext("2d").putImageData(image, 0, 0);
 }
 
 function getAge(b) {

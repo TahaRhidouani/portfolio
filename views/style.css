@@ -118,6 +118,10 @@ li {
   pointer-events: none;
 }
 
+#noise.hidden {
+  opacity: 0;
+}
+
 #scroll_tutorial {
   position: fixed;
   height: 100px;

@@ -15,8 +15,9 @@ let moreProjects = {};
 
 const blacklistedProjects = [];
 
-let headers = new Headers();
-headers.set("Authorization", "Basic " + Buffer.from("tahainc:" + fs.readFileSync("github-api", "utf8")).toString("base64"));
+const headers = {
+  Authorization: "Bearer " + fs.readFileSync("github-api", "utf8").toString("base64"),
+};
 
 app.use(express.static("views"));
 app.use(express.urlencoded({ extended: true }));
@@ -64,10 +65,7 @@ function refreshProjects() {
         let url = p.html_url.split("/")[4];
         let name = p.name
           .split("-")
-          .map((word) => {
-            if (word == "ai") return "AI";
-            else return word.charAt(0).toUpperCase() + word.slice(1);
-          })
+          .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
           .join(" ");
 
         if (blacklistedProjects.includes(name)) continue;
