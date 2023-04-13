@@ -262,7 +262,7 @@ function animate() {
 
   if (object) object.lookAt(vector);
 
-  if (deviceSlownessFactor < SLOW_CUTOFF) noise();
+  if (!document.hidden && deviceSlownessFactor < SLOW_CUTOFF) noise();
 
   requestAnimationFrame(animate);
   render();
