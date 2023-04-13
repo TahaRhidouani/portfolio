@@ -87,10 +87,7 @@ function refreshProjects() {
           for (let p of data) {
             let name = p.name
               .split("-")
-              .map((word) => {
-                if (word == "ai") return "AI";
-                else return word.charAt(0).toUpperCase() + word.slice(1);
-              })
+              .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
               .join(" ");
 
             if (!starredIds.includes(p.id) && !jobProjects.includes(name.toLowerCase()) && !blacklistedProjects.includes(name)) {
