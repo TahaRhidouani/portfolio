@@ -5,7 +5,7 @@
     "date": "May 2022 - Dec 2022",
     "logo": "/rcmp/logo.png",
     "github": null,
-    "demo": null,
+    "demo": "http://infoweb.rcmp-grc.gc.ca",
     "description": ["Developed manuals & policy web pages reaching 30,000+ employees", "Refined & automated the code review process and reduced production issues by 90%", "Organized presentations on web standards & frameworks (e.g., WCAG 2.0, WET Toolkit)", "Participated in collaborative strategic planning for future server configurations"],
     "image": ""
   },
