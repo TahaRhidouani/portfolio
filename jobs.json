@@ -16,7 +16,7 @@
     "logo": "/poolparty/logo.png",
     "github": "https://github.com/TahaInc/pool-party",
     "demo": "https://taharhidouani.com/projects/pool-party/",
-    "description": ["Designed an animated UI for a casino game, based on Figma designs", "Developed & optimized backend using web sockets, enabling real-time multiplayer"],
+    "description": ["Designed a responsive & animated UI for a casino game, based on Figma designs", "Developed & optimized backend using web sockets, enabling real-time multiplayer"],
     "image": "/poolparty/screenshot.gif"
   },
   {
