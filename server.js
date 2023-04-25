@@ -9,6 +9,7 @@ const md = require("markdown-it")({
 });
 
 const PORT = process.env.PORT || 8080;
+const MORE_PROJECT_LIMIT = 6;
 
 let projects = {};
 let moreProjects = {};
@@ -93,6 +94,8 @@ function refreshProjects() {
             if (!starredIds.includes(p.id) && !jobProjects.includes(name.toLowerCase()) && !blacklistedProjects.includes(name)) {
               moreProjects[p.id] = { name: name, description: p.description ?? "", url: p.html_url };
             }
+
+            if (Object.keys(moreProjects).length >= MORE_PROJECT_LIMIT) break;
           }
         });
     });

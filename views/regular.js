@@ -16,7 +16,7 @@ scroll.on("scroll", (event) => {
 
   if (hasScrolled) document.getElementById("scroll_tutorial").classList.add("hidden");
 
-  if (event.direction === "down") closeResume();
+  if (event.direction === "down" && scroll.scroll.instance.delta.y > window.innerHeight) closeResume();
 
   if (sectionNumber % 2 != 0) {
     sectionProgress = 1 - (totalProgress - sectionNumber);
@@ -303,9 +303,21 @@ function closeResume() {
 }
 
 function viewResume() {
-  document.getElementById("main_info").classList.add("hidden");
-  document.getElementById("pdf_wrapper").classList.remove("hidden");
-  document.getElementById("scroll_tutorial").classList.add("invisible");
+  if (scroll.scroll.instance.delta.y < 50) {
+    document.getElementById("main_info").classList.add("hidden");
+    document.getElementById("pdf_wrapper").classList.remove("hidden");
+    document.getElementById("scroll_tutorial").classList.add("invisible");
+  } else {
+    scroll.scrollTo("top", {
+      duration: 500,
+      disableLerp: true,
+      callback: () => {
+        document.getElementById("main_info").classList.add("hidden");
+        document.getElementById("pdf_wrapper").classList.remove("hidden");
+        document.getElementById("scroll_tutorial").classList.add("invisible");
+      },
+    });
+  }
 }
 
 let workIndex = 1;
@@ -375,6 +387,8 @@ function jobDown() {
 }
 
 function openWork(id) {
+  scroll.scrollTo(window.innerHeight);
+
   document.getElementById("work_wrapper").classList.add("hidden");
   setTimeout(() => document.getElementById("work_title").classList.add("hidden"), 50);
   setTimeout(() => document.getElementById("work_page").classList.remove("hidden"), 100);
@@ -401,8 +415,6 @@ function openWork(id) {
   let jobDescriptions = "";
   for (let description of jobs[id].description) jobDescriptions += "<li>" + description + "</li>";
   document.querySelector("#work_page > .description").innerHTML = jobDescriptions;
-
-  document.getElementById("project_information").scrollTo(0, 0);
 }
 
 function closeWork() {
@@ -441,6 +453,8 @@ function openProject(id) {
 
   document.getElementById("secondary_panel").classList.remove("hidden");
   setTimeout(() => document.getElementById("main_panel").classList.remove("hidden"), 100);
+
+  document.getElementById("project_information").scrollTo(0, 0);
 }
 
 function closeProject() {
