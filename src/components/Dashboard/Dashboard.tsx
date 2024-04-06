@@ -833,7 +833,7 @@ export function Dashboard({ data }: { data: Data }) {
 
             <Card
               type="inner"
-              title="Achievements & Recognition"
+              title="Achievements"
               size="default"
               extra={
                 <Button

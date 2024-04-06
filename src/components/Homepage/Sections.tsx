@@ -318,7 +318,7 @@ export function Achievements({ achievements, align = "right" }: { achievements: 
       }}
     >
       <h1 className={styles.center} style={{ marginBottom: "3%" }}>
-        Achievements & Recognition
+        Achievements
       </h1>
 
       {splitAchievements.map((a, i) => (
