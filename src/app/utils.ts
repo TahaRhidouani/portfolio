@@ -8,7 +8,6 @@ import { Data } from "@/types";
 import { cache } from "react";
 
 export const getData = cache(async (sensitiveData: boolean): Promise<Data> => {
-  console.log("GETTING DATA");
   await connectDB();
 
   const theme = await Assets.findOne({ name: "theme" }).lean().exec();
@@ -29,12 +28,12 @@ export const getData = cache(async (sensitiveData: boolean): Promise<Data> => {
   const selected = await Projects.find({ selected: true, ...(!sensitiveData && { visible: true }) }, { _id: 0 })
     .lean()
     .exec();
-  selected.sort((a, b) => a.order - b.order);
+  selected?.sort((a, b) => a.order - b.order);
 
   const other = await Projects.find({ selected: false, ...(!sensitiveData && { visible: true }) }, { _id: 0 })
     .lean()
     .exec();
-  other.sort((a, b) => a.order - b.order);
+  other?.sort((a, b) => a.order - b.order);
 
   const achievements = await Achievements.find({}, { _id: 0 }).lean().exec();
 
@@ -51,7 +50,7 @@ export const getData = cache(async (sensitiveData: boolean): Promise<Data> => {
     },
     jobs: jobs ?? [],
     achievements: achievements ?? [],
-    resume: resume!.data,
+    resume: resume?.data ?? "",
     ...(sensitiveData && { resumeLocation: resumeLocation?.data as string }),
   };
 });
