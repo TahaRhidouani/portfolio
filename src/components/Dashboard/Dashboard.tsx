@@ -85,8 +85,8 @@ export function Dashboard({ data }: { data: Data }) {
   });
   const [projectData, setProjectData] = useState<{
     projects: (Project & { key: string })[];
-    target: string[];
-    selected: string[];
+    target: React.Key[];
+    selected: React.Key[];
   }>(getProjectData(data.projects.selected.concat(data.projects.other)));
   const [achievementData, setAchievementData] = useState<(Achievement & { logoData?: any })[]>(
     data.achievements.map((a, i) => ({
