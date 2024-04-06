@@ -1,0 +1,273 @@
+* {
+  font-family: "Circular";
+  -webkit-font-smoothing: subpixel-antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  user-select: none;
+  -webkit-user-select: none;
+  cursor: none !important;
+}
+
+html {
+  overflow-y: scroll;
+  height: auto;
+}
+
+body {
+  margin: 0;
+  background: linear-gradient(to bottom, black, #151515 100vh);
+  position: relative;
+  overflow: clip;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-scrolling iframe {
+  pointer-events: none;
+}
+
+h1 {
+  color: var(--primary);
+  font-size: 7rem;
+  line-height: 120%;
+  overflow: visible;
+  width: 100%;
+  margin: 0;
+}
+
+h2 {
+  color: var(--primary);
+  font-size: 4rem;
+  font-weight: lighter;
+  line-height: 110%;
+  overflow: visible;
+  width: 100%;
+  margin: 0;
+}
+
+h3 {
+  color: var(--primary);
+  font-size: 2.5rem;
+  font-weight: lighter;
+  line-height: 110%;
+  overflow: visible;
+  width: 100%;
+  margin: 0;
+}
+
+h4 {
+  color: var(--primary);
+  font-size: 1.5rem;
+  font-weight: lighter;
+  line-height: 110%;
+  overflow: visible;
+  width: 100%;
+  margin: 0;
+}
+
+h5 {
+  color: var(--primary);
+  font-size: 1rem;
+  font-weight: lighter;
+  line-height: 110%;
+  overflow: visible;
+  width: 100%;
+  margin: 0;
+}
+
+h6 {
+  color: var(--primary);
+  font-size: 0.8rem;
+  font-weight: lighter;
+  line-height: 110%;
+  overflow: visible;
+  width: 100%;
+  margin: 0;
+}
+
+p {
+  color: var(--primary);
+  font-size: 1rem;
+  font-weight: lighter;
+  line-height: 110%;
+  margin: 0;
+}
+
+a {
+  color: var(--accent);
+  font-size: 2rem;
+  display: flex;
+}
+
+ul {
+  list-style-position: inside;
+}
+
+li {
+  font-size: 1.3rem;
+  margin-block: 2px;
+}
+
+.primary {
+  color: var(--primary);
+}
+
+.secondary {
+  color: var(--secondary);
+}
+
+.accent {
+  color: var(--accent);
+}
+
+.annotationLayer :is(.linkAnnotation, .buttonWidgetAnnotation.pushButton) > a:hover {
+  background: var(--accent) !important;
+}
+
+[data-cursor-size],
+[data-cursor-text],
+[data-cursor-stick],
+[data-cursor-magnetic] {
+  position: relative;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: transparent;
+  }
+
+  a,
+  button,
+  input,
+  textarea {
+    pointer-events: painted;
+    transform: translate(0, 0) !important;
+  }
+}
+
+@media (height < 900px) or (width < 1500px) {
+  h1 {
+    font-size: 5rem;
+  }
+
+  h2 {
+    font-size: 3rem;
+  }
+
+  h3 {
+    font-size: 2rem;
+  }
+
+  h4 {
+    font-size: 1.3rem;
+  }
+
+  h5 {
+    font-size: 0.8rem;
+  }
+
+  h6 {
+    font-size: 0.7rem;
+  }
+
+  p {
+    font-size: 0.8rem;
+  }
+
+  a {
+    font-size: 1.8rem;
+  }
+
+  li {
+    font-size: 1.2rem;
+  }
+}
+
+@media (height < 600px) or (width < 1100px) {
+  h1 {
+    font-size: 3.5rem;
+  }
+
+  h2 {
+    font-size: 2rem;
+  }
+
+  h3 {
+    font-size: 1.5rem;
+  }
+
+  h4 {
+    font-size: 1rem;
+  }
+
+  h5 {
+    font-size: 0.5rem;
+  }
+
+  h6 {
+    font-size: 0.5rem;
+  }
+
+  p {
+    font-size: 0.5rem;
+  }
+
+  a {
+    font-size: 1.2rem;
+  }
+
+  li {
+    font-size: 0.9rem;
+  }
+}
+
+@media (width < 600px) {
+  h1 {
+    font-size: 2.5rem;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+  }
+
+  h3 {
+    font-size: 1.2rem;
+  }
+
+  h4 {
+    font-size: 0.8rem;
+  }
+
+  h5 {
+    font-size: 0.5rem;
+  }
+
+  h6 {
+    font-size: 0.5rem;
+  }
+
+  p {
+    font-size: 0.5rem;
+  }
+
+  a {
+    font-size: 1rem;
+  }
+
+  li {
+    font-size: 0.9rem;
+  }
+}

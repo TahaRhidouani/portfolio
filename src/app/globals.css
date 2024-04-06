@@ -1,0 +1,19 @@
+@font-face {
+  font-family: Circular;
+  src: url("/assets/fonts/Circular.ttf") format("truetype"), url("/assets/fonts/Circular.woff") format("woff");
+}
+
+@font-face {
+  font-family: Copyduck;
+  src: url("/assets/fonts/Copyduck.ttf") format("truetype"), url("/assets/fonts/Copyduck.woff") format("woff");
+}
+
+:root {
+  color-scheme: dark;
+  --primary: rgb(226, 226, 226);
+  --secondary: rgb(145, 145, 145);
+}
+
+body {
+  margin: 0;
+}

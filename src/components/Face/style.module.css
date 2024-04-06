@@ -1,0 +1,20 @@
+.model {
+  position: absolute;
+  display: block;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+}
+
+.sleepText > h1 {
+  font-family: "Copyduck";
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+}
+
+@media (orientation: portrait) or (hover: none) {
+  .model {
+    top: -15%;
+    left: 50% !important;
+    height: 80vh;
+  }
+}

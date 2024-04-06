@@ -1,0 +1,208 @@
+.face {
+  position: fixed;
+  overflow: hidden;
+  height: 100vh;
+  width: 100vw;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 999999;
+}
+
+.noise {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  opacity: 0.05;
+  pointer-events: none;
+  z-index: 99999999;
+  background: url("/assets/noise.gif");
+}
+
+.background {
+  position: absolute;
+  height: 100%;
+  width: 100vw;
+  top: 50vh;
+  left: 0;
+  mask-image: linear-gradient(to bottom, rgb(0, 0, 0, 0) 0px, rgba(0, 0, 0, 1) 50vh);
+  background-size: 40px 40px;
+  background-image: linear-gradient(to right, #2828288b 2px, transparent 2px), linear-gradient(to bottom, #2828288b 2px, transparent 2px);
+  z-index: -9999;
+  box-shadow: 0 0 200px rgba(0, 0, 0, 1) inset;
+}
+
+.section {
+  position: relative;
+  height: 100vh;
+  overflow: visible;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.horizontalContainer {
+  height: 200vh;
+}
+
+.horizontal {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  z-index: 999999;
+}
+
+.spotlightSection {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+}
+
+.spotlightBackground {
+  position: absolute;
+  height: 100vh;
+  width: 100vw;
+  top: 0;
+  left: 0;
+  background: black;
+}
+
+.spotlightContent {
+  z-index: 99999;
+  position: absolute;
+  top: 50%;
+  right: 30%;
+  translate: 50% -50%;
+}
+
+.center {
+  text-align: center;
+}
+
+.megaBlob {
+  position: absolute;
+  height: 300vh;
+  width: 300vw;
+  left: -100vw;
+  top: -100vh;
+  z-index: -2;
+  background: radial-gradient(ellipse, color-mix(in lab, var(--accent) 30%, black), rgb(0 0 0 / 60%) 25%, rgba(0, 0, 0, 0) 55%);
+  pointer-events: none;
+  transform: rotate(10deg);
+}
+
+.blob {
+  position: absolute;
+  height: 120vh;
+  width: 100vw;
+  background: radial-gradient(ellipse, rgb(48, 48, 48), rgba(37, 39, 39, 0.64) 35%, rgba(0, 0, 0, 0) 55%);
+  z-index: -1;
+  pointer-events: none;
+  transform: rotate(10deg);
+}
+
+.resume {
+  display: flex;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.selectedProjects {
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+  gap: max(5vw, 100px);
+  flex-wrap: nowrap;
+}
+
+.aboutMeText {
+  padding-inline: min(5vw, 100px);
+  box-sizing: border-box;
+  max-width: 1200px;
+}
+
+.aboutMeText em {
+  font-style: italic;
+  font-size: larger;
+  padding-right: 10px;
+}
+
+.contactEntry {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 30px;
+  color: white;
+}
+
+@media (orientation: portrait) or (hover: none) {
+  .face {
+    background: linear-gradient(to bottom, black 30%, transparent 60%);
+  }
+
+  .section {
+    height: 60vh !important;
+    width: calc(100vw - 40px) !important;
+    padding: 40vh 0 0 0 !important;
+    margin: 0 auto !important;
+  }
+
+  .section ~ .section {
+    padding: 25vh 0 0 0 !important;
+  }
+
+  .spotlightSection {
+    height: 60dvh;
+    padding: 40vh 0 0 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .spotlightContent {
+    position: relative;
+    right: unset;
+    top: unset;
+    translate: unset;
+  }
+
+  .blob {
+    height: 100%;
+    width: 150vw;
+  }
+
+  .resume {
+    width: fit-content;
+  }
+
+  .horizontalContainer {
+    height: 60vh;
+  }
+
+  .horizontal {
+    position: relative;
+    height: 60vh;
+    z-index: 1;
+  }
+
+  .selectedProjectsWrapper {
+    overflow: hidden;
+    width: 100vw;
+  }
+
+  .selectedProjects {
+    height: 30vh;
+    gap: 0;
+    width: 100%;
+    padding-bottom: 20px;
+    overflow-x: scroll;
+  }
+}
