@@ -1,8 +1,7 @@
-import { DateType } from "@/types";
 import styles from "@/components/JobCards/style.module.css";
 import MagneticButton from "@/components/MagneticButton";
+import { DateType } from "@/types";
 import Image from "next/image";
-import React from "react";
 import { RollingCounter } from "../RollingCounter/RollingCounter";
 
 export function Control({ start, end, data, changeIndex }: { start: DateType; end: DateType; data: { length: number; index: number }; changeIndex: (change: number) => void }) {
@@ -16,13 +15,13 @@ export function Control({ start, end, data, changeIndex }: { start: DateType; en
 
       <div style={{ display: "flex", alignItems: "center", justifyContent: "center", marginBottom: "6px" }}>
         <h4 className={styles.dateText}>
-          <RollingCounter text={start.join(" ")} />
+          <RollingCounter text={start?.join(" ")} />
         </h4>
 
         <h4 style={{ paddingInline: "10px 5px", width: "auto" }}>to</h4>
 
         <h4 className={styles.dateText}>
-          <RollingCounter text={end.join(" ")} delay={0.05} />
+          <RollingCounter text={end?.join(" ")} delay={0.05} />
         </h4>
       </div>
 

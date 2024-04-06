@@ -85,39 +85,43 @@ export function Name({ position, resume, align = "right" }: { position: string; 
         <h1 className={styles.center}>Taha Rhidouani</h1>
         <h2 className={styles.center + " " + "secondary"}>{position}</h2>
 
-        <div style={{ marginTop: "5%" }}>
-          <MagneticButton
-            padding={"15px 40px"}
-            borderRadius={"10px"}
-            onClick={() => {
-              setShowResume(true);
-              setShowGlasses!(true);
-            }}
-          >
-            View Resume
-          </MagneticButton>
-        </div>
+        {resume && (
+          <div style={{ marginTop: "5%" }}>
+            <MagneticButton
+              padding={"15px 40px"}
+              borderRadius={"10px"}
+              onClick={() => {
+                setShowResume(true);
+                setShowGlasses!(true);
+              }}
+            >
+              View Resume
+            </MagneticButton>
+          </div>
+        )}
 
         <Shapes />
       </div>
 
-      <div ref={ref} className={styles.spotlightSection}>
-        <div ref={childrenRef} className={styles.spotlightContent}>
-          <div className={styles.resume}>
-            <Document file={"data:application/pdf;base64," + resume} loading={"Loading resume..."}>
-              <Page pageNumber={1} height={isMobile ? innerHeight * 0.5 : Math.min(innerHeight - 200, 1000)} />
-            </Document>
+      {resume && (
+        <div ref={ref} className={styles.spotlightSection}>
+          <div ref={childrenRef} className={styles.spotlightContent}>
+            <div className={styles.resume}>
+              <Document file={"data:application/pdf;base64," + resume} loading={"Loading resume..."}>
+                <Page pageNumber={1} height={isMobile ? innerHeight * 0.5 : Math.min(innerHeight - 200, 1000)} />
+              </Document>
+            </div>
           </div>
+          <div
+            onClick={() => {
+              setShowResume(false);
+              setShowGlasses!(false);
+            }}
+            ref={backgroundRef}
+            className={styles.spotlightBackground}
+          />
         </div>
-        <div
-          onClick={() => {
-            setShowResume(false);
-            setShowGlasses!(false);
-          }}
-          ref={backgroundRef}
-          className={styles.spotlightBackground}
-        />
-      </div>
+      )}
 
       <div className={styles.megaBlob} />
     </>
