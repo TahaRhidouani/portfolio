@@ -20,7 +20,7 @@ export const getData = cache(async (sensitiveData: boolean): Promise<Data> => {
 
   const jobs = await Jobs.find({}, { _id: 0 }).lean().exec();
   jobs
-    .sort((a, b) => {
+    ?.sort((a, b) => {
       return formatDate(a.date.start).getTime() - formatDate(b.date.start).getTime();
     })
     .reverse();
