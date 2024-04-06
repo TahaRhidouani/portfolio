@@ -1053,17 +1053,17 @@ export function JobDate({ date, setDate }: { date: Dates; setDate: (date: Dates)
           allowEmpty
           defaultValue={date ? [dayjs(formatDate(date.start)), currentJob ? dayjs(new Date()) : dayjs(formatDate(date.end))] : undefined}
           onChange={(values) => {
-            if (!values) return;
+            if (!values?.[0]) return;
 
-            const start = values[0]!
+            const start = values[0]
               .format("MMM YYYY")
               .split(" ")
               .map((el, i) => (i === 1 ? parseInt(el) : el)) as DateType;
             const end = (
               currentJob
                 ? ["Present"]
-                : values[1]!
-                    .format("MMM YYYY")
+                : values[1]
+                    ?.format("MMM YYYY")
                     .split(" ")
                     .map((el, i) => (i === 1 ? parseInt(el) : el))
             ) as DateType;
