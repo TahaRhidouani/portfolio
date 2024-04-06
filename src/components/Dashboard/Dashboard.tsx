@@ -128,10 +128,12 @@ export function Dashboard({ data }: { data: Data }) {
     <ConfigProvider
       theme={{
         algorithm: theme.darkAlgorithm,
-        token: {
-          colorPrimary: data.theme,
-          colorLink: data.theme,
-        },
+        token: data?.theme
+          ? {
+              colorPrimary: data.theme,
+              colorLink: data.theme,
+            }
+          : undefined,
       }}
     >
       {contextHolder}
