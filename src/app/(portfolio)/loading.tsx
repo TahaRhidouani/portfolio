@@ -10,7 +10,7 @@ export default function Loading() {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        height: "100vh",
+        height: "100svh",
         width: "100vw",
         backgroundColor: "black",
       }}

@@ -201,7 +201,7 @@
 
 @media (orientation: portrait) or (hover: none) {
   .stack {
-    height: 30vh;
+    height: 30svh;
   }
 
   .cardControl {

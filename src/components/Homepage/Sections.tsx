@@ -37,6 +37,8 @@ export function Name({ position, resume, align = "right" }: { position: string; 
   const backgroundRef = useRef<HTMLDivElement>(null);
 
   useGSAP(() => {
+    if (!resume) return;
+
     gsap.set(ref.current, { pointerEvents: showResume ? "all" : "none" });
     gsap.set(backgroundRef.current, { opacity: showResume ? 1 : 0 });
     gsap.set(childrenRef.current, {
@@ -48,6 +50,8 @@ export function Name({ position, resume, align = "right" }: { position: string; 
   }, [isMobile]);
 
   useGSAP(() => {
+    if (!resume) return;
+
     gsap.set(ref.current, { pointerEvents: showResume ? "all" : "none" });
     gsap.to(backgroundRef.current, { opacity: showResume ? 1 : 0, duration: 0.5 });
     gsap.to(childrenRef.current, {
@@ -76,7 +80,7 @@ export function Name({ position, resume, align = "right" }: { position: string; 
         className={styles.section}
         style={{
           width: "60vw",
-          marginBottom: "50vh",
+          marginBottom: "50svh",
           paddingRight: align === "left" ? "40vw" : "unset",
           right: align === "right" ? 0 : "unset",
           paddingLeft: align === "right" ? "40vw" : "unset",
@@ -164,7 +168,7 @@ export function Jobs({ jobs, align = "right" }: { jobs: JobsType; align?: Align 
       className={styles.section}
       style={{
         width: "60vw",
-        marginBottom: "50vh",
+        marginBottom: "50svh",
         paddingRight: align === "left" ? "40vw" : "unset",
         right: align === "right" ? 0 : "unset",
         paddingLeft: align === "right" ? "40vw" : "unset",

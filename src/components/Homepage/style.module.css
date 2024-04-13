@@ -149,19 +149,19 @@
   }
 
   .section {
-    height: 60vh !important;
+    height: 60svh !important;
     width: calc(100vw - 40px) !important;
-    padding: 40vh 0 0 0 !important;
+    padding: 40svh 0 0 0 !important;
     margin: 0 auto !important;
   }
 
   .section ~ .section {
-    padding: 25vh 0 0 0 !important;
+    padding: 25svh 0 0 0 !important;
   }
 
   .spotlightSection {
-    height: 60dvh;
-    padding: 40vh 0 0 0;
+    height: 60svh;
+    padding: 40svh 0 0 0;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -184,12 +184,12 @@
   }
 
   .horizontalContainer {
-    height: 60vh;
+    height: 60svh;
   }
 
   .horizontal {
     position: relative;
-    height: 60vh;
+    height: 60svh;
     z-index: 1;
   }
 
@@ -199,7 +199,7 @@
   }
 
   .selectedProjects {
-    height: 30vh;
+    height: 30svh;
     gap: 0;
     width: 100%;
     padding-bottom: 20px;
