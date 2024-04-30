@@ -13,6 +13,9 @@ import mongoose from "mongoose";
 })
 class AchievementsClass {
   @prop({ required: true })
+  id: string;
+
+  @prop({ required: true })
   logo: string;
 
   @prop({ required: true })
@@ -26,6 +29,6 @@ class AchievementsClass {
 }
 
 type AchievementsModelType = ReturnModelType<typeof AchievementsClass>;
-
 const Achievements = (mongoose.models.Achievements as AchievementsModelType) ?? getModelForClass(AchievementsClass);
+
 export { Achievements, AchievementsClass };

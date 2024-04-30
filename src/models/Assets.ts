@@ -1,34 +1,28 @@
-import {
-    ModelOptions,
-    Severity,
-    getModelForClass,
-    prop,
-    ReturnModelType,
-} from "@typegoose/typegoose";
+import { ModelOptions, ReturnModelType, Severity, getModelForClass, prop } from "@typegoose/typegoose";
 import mongoose from "mongoose";
 
 @ModelOptions({
-    schemaOptions: {
-        timestamps: false,
-        collection: "assets",
-    },
-    options: {
-        allowMixed: Severity.ALLOW,
-        customName: "Assets"
-    },
+  schemaOptions: {
+    timestamps: false,
+    collection: "assets",
+  },
+  options: {
+    allowMixed: Severity.ALLOW,
+    customName: "Assets",
+  },
 })
-
 class AssetsClass {
+  @prop({ required: true })
+  id: string;
 
-    @prop({required: true, unique: true})
-    name: string;
+  @prop({ required: true, unique: true })
+  name: string;
 
-    @prop({required: true})
-    data: string;
-
+  @prop({ required: true })
+  data: string;
 }
 
-type AssetsModelType = ReturnModelType<typeof AssetsClass>
+type AssetsModelType = ReturnModelType<typeof AssetsClass>;
+const Assets = (mongoose.models.Assets as AssetsModelType) ?? getModelForClass(AssetsClass);
 
-const Assets = mongoose.models.Assets as AssetsModelType ?? getModelForClass(AssetsClass);
-export {Assets, AssetsClass};
+export { Assets, AssetsClass };

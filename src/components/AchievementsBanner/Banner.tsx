@@ -57,7 +57,7 @@ export const BannerItem = forwardRef(function BannerItem(
   return (
     <a ref={ref} className={styles.item} {...(data.url && { href: data.url })} target="_blank">
       <div className={styles.contentWrapper} style={{ pointerEvents: data.url ? "all" : "none" }} data-cursor-size="100px" data-cursor-text={"More info"} data-smile-animation={true}>
-        <Image className={styles.logo} src={data.logo} alt={"logo"} width={0} height={0} />
+        <Image className={styles.logo} src={"/api/achievements/" + data.id + "/logo"} alt={"logo"} width={100} height={100} />
         <div>
           <h3>{data.title}</h3>
           <h4 className={styles.description}>{data.description}</h4>

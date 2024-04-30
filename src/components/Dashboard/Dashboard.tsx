@@ -318,6 +318,7 @@ export function Dashboard({ data }: { data: Data }) {
                       description: job?.description,
                       logo: jobData.jobLogos[jobData.ids[index]]?.url,
                       preview: jobData.jobPreviews[jobData.ids[index]]?.url,
+                      previewType: jobData.jobPreviews[jobData.ids[index]]?.type,
                       colors: Object.values(jobData.colors[jobData.ids[index]] ?? {}),
                       repoUrl: job?.repoUrl,
                       websiteUrl: job?.websiteUrl,
@@ -483,6 +484,9 @@ export function Dashboard({ data }: { data: Data }) {
                                       showUploadList={{ showPreviewIcon: false }}
                                       beforeUpload={(file) => false}
                                       onChange={(file) => {
+                                        const isImage = validImages.includes(file.fileList[0].type!);
+                                        const isVideo = validVideos.includes(file.fileList[0].type!);
+
                                         if (file.fileList.length === 0) {
                                           setJobData({
                                             ...jobData,
@@ -493,7 +497,7 @@ export function Dashboard({ data }: { data: Data }) {
                                           });
                                         } else if (file.fileList[0].size! / 1024 / 1024 > 15) {
                                           showNotification(true, "Please upload an image smaller than 15MB");
-                                        } else if (!validImages.includes(file.fileList[0].type!) && !validVideos.includes(file.fileList[0].type!)) {
+                                        } else if (!isImage && !isVideo) {
                                           showNotification(true, "Please upload a valid image or video");
                                         } else {
                                           let reader = new FileReader();
@@ -507,7 +511,7 @@ export function Dashboard({ data }: { data: Data }) {
                                               ...jobData,
                                               jobPreviews: {
                                                 ...jobData.jobPreviews,
-                                                [field.key]: fileData,
+                                                [field.key]: { ...fileData, type: isImage ? "image" : isVideo ? "video" : null },
                                               },
                                             });
                                           };
@@ -543,6 +547,7 @@ export function Dashboard({ data }: { data: Data }) {
                                     <Flex gap="middle">
                                       <ColorPicker
                                         format="hex"
+                                        disabledAlpha
                                         defaultValue={jobData.colors[field.key]?.[0]}
                                         onChange={(value, hex) => {
                                           setJobData({
@@ -559,6 +564,7 @@ export function Dashboard({ data }: { data: Data }) {
                                       />
                                       <ColorPicker
                                         format="hex"
+                                        disabledAlpha
                                         defaultValue={jobData.colors[field.key]?.[1]}
                                         onChange={(value, hex) => {
                                           setJobData({
@@ -575,6 +581,7 @@ export function Dashboard({ data }: { data: Data }) {
                                       />
                                       <ColorPicker
                                         format="hex"
+                                        disabledAlpha
                                         defaultValue={jobData.colors[field.key]?.[2]}
                                         onChange={(value, hex) => {
                                           setJobData({

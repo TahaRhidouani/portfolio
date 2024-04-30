@@ -1,17 +1,17 @@
-import { Project, Projects } from "@/types";
-import styles from "./style.module.css";
 import MagneticButton from "@/components/MagneticButton";
-import React, { useEffect, useRef, useState } from "react";
-import Image from "next/image";
-import { gsap } from "gsap";
+import { Project, Projects } from "@/types";
 import { useGSAP } from "@gsap/react";
+import { gsap } from "gsap";
+import Image from "next/image";
+import { useEffect, useRef, useState } from "react";
 import { useMediaQuery } from "usehooks-ts";
+import styles from "./style.module.css";
 
 export function List({ data, githubUsername }: { data: Projects; githubUsername: string }) {
   const isMobile = useMediaQuery("(orientation: portrait) or (hover: none)");
 
   const container = useRef<HTMLDivElement>(null);
-  const [maxEntries, setMaxEntries] = useState<number>(data.length);
+  const [projects, setProjects] = useState<Projects>(data);
 
   useGSAP(
     () => {
@@ -34,12 +34,13 @@ export function List({ data, githubUsername }: { data: Projects; githubUsername:
         }
       );
     },
-    { scope: container }
+    { scope: container, dependencies: [projects] }
   );
 
   useEffect(() => {
     const handleResize = () => {
-      setMaxEntries(Math.floor(Math.max(0, isMobile ? window.screen.height * 0.6 - 200 : innerHeight - 300) / (isMobile ? 100 : 150)));
+      const maxEntries = Math.floor(Math.max(0, isMobile ? window.screen.height * 0.6 - 200 : innerHeight - 300) / (isMobile ? 100 : 150));
+      setProjects(data.slice(0, maxEntries));
     };
 
     handleResize();
@@ -48,12 +49,12 @@ export function List({ data, githubUsername }: { data: Projects; githubUsername:
     return () => {
       window.removeEventListener("resize", handleResize);
     };
-  }, [isMobile]);
+  }, [isMobile, data]);
 
   return (
     <div ref={container} className={styles.entriesWrapper}>
-      {data.slice(0, maxEntries).map((project, i) => (
-        <Entry key={i} project={project} />
+      {projects.map((project) => (
+        <Entry key={project.name} project={project} />
       ))}
 
       <div className={styles.entry} style={{ padding: "50px" }}>
@@ -69,13 +70,12 @@ export function Entry({ project }: { project: Project }) {
   const isMobile = useMediaQuery("(orientation: portrait) or (hover: none)");
 
   const content = useRef<HTMLAnchorElement>(null);
-  const timeline = useRef<gsap.core.Timeline>();
+  const timeline = useRef<gsap.core.Timeline>(gsap.timeline());
   const { contextSafe } = useGSAP({ scope: content, dependencies: [isMobile] });
 
   const toggle = contextSafe((hover: boolean) => {
     if (!isMobile && project.images.length > 0) {
-      timeline.current?.kill();
-      timeline.current = gsap.timeline();
+      timeline.current.clear();
 
       timeline.current.to(
         content.current,

@@ -7,35 +7,38 @@ import { Projects } from "@/models/Projects";
 import { Data } from "@/types";
 import { cache } from "react";
 
-export const getData = cache(async (sensitiveData: boolean): Promise<Data> => {
+export const getData = cache(async (extras: boolean): Promise<Data> => {
   await connectDB();
 
   const theme = await Assets.findOne({ name: "theme" }).lean().exec();
 
   const position = await Assets.findOne({ name: "position" }).lean().exec();
 
-  const resume = await Assets.findOne({ name: "resume" }).lean().exec();
+  const resume = await Assets.exists({ name: "resume" });
 
   const about = await Assets.findOne({ name: "about-me" }).lean().exec();
 
-  const jobs = await Jobs.find({}, { _id: 0 }).lean().exec();
+  const jobs = await Jobs.find({}, { _id: 0, ...(extras ? {} : { logo: 0, preview: 0 }) })
+    .lean()
+    .exec();
+
   jobs
     ?.sort((a, b) => {
       return formatDate(a.date.start).getTime() - formatDate(b.date.start).getTime();
     })
     .reverse();
 
-  const selected = await Projects.find({ selected: true, ...(!sensitiveData && { visible: true }) }, { _id: 0 })
+  const selected = await Projects.find({ selected: true, ...(!extras && { visible: true }) }, { _id: 0 })
     .lean()
     .exec();
   selected?.sort((a, b) => a.order - b.order);
 
-  const other = await Projects.find({ selected: false, ...(!sensitiveData && { visible: true }) }, { _id: 0 })
+  const other = await Projects.find({ selected: false, ...(!extras && { visible: true }) }, { _id: 0 })
     .lean()
     .exec();
   other?.sort((a, b) => a.order - b.order);
 
-  const achievements = await Achievements.find({}, { _id: 0 }).lean().exec();
+  const achievements = await Achievements.find({}, { _id: 0, logo: 0 }).lean().exec();
 
   const resumeLocation = await Assets.findOne({ name: "resume-location" }).lean().exec();
 
@@ -50,7 +53,7 @@ export const getData = cache(async (sensitiveData: boolean): Promise<Data> => {
     },
     jobs: jobs ?? [],
     achievements: achievements ?? [],
-    resume: resume?.data ?? "",
-    ...(sensitiveData && { resumeLocation: resumeLocation?.data as string }),
+    resumeExists: !!resume,
+    ...(extras && { resumeLocation: resumeLocation?.data as string }),
   };
 });

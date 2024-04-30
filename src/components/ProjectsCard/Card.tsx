@@ -1,16 +1,16 @@
-import styles from "./style.module.css";
+import { CardContext } from "@/components/ProjectsCard/CardContext";
+import { Project } from "@/types";
 import { useGSAP } from "@gsap/react";
+import { useLenis } from "@studio-freight/react-lenis";
 import gsap from "gsap";
 import Flip from "gsap/Flip";
-import React, { useContext, useRef } from "react";
-import { Project } from "@/types";
-import { useLenis } from "@studio-freight/react-lenis";
-import { CardContext } from "@/components/ProjectsCard/CardContext";
+import { useContext, useRef } from "react";
 import { useMediaQuery } from "usehooks-ts";
+import styles from "./style.module.css";
 
 export function Card({ data }: { data: Project }) {
   const { contextSafe } = useGSAP();
-  const lenis = useLenis(() => {});
+  const lenis = useLenis();
 
   const { setData, setShow, toggleCardFunction, fullscreenRef } = useContext(CardContext);
 

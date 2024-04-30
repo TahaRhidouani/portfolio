@@ -1,6 +1,6 @@
-import { ModelOptions, Severity, getModelForClass, prop, ReturnModelType } from "@typegoose/typegoose";
-import mongoose from "mongoose";
 import type { Dates } from "@/types";
+import { ModelOptions, ReturnModelType, Severity, getModelForClass, prop } from "@typegoose/typegoose";
+import mongoose from "mongoose";
 
 @ModelOptions({
   schemaOptions: {
@@ -13,6 +13,9 @@ import type { Dates } from "@/types";
   },
 })
 class JobsClass {
+  @prop({ required: true })
+  id: string;
+
   @prop({ required: true })
   company: string;
 
@@ -38,6 +41,9 @@ class JobsClass {
   preview: string;
 
   @prop()
+  previewType: "image" | "video";
+
+  @prop()
   repoUrl: string;
 
   @prop()
@@ -45,6 +51,6 @@ class JobsClass {
 }
 
 type JobsModelType = ReturnModelType<typeof JobsClass>;
-
 const Jobs = (mongoose.models.Jobs as JobsModelType) ?? getModelForClass(JobsClass);
+
 export { Jobs, JobsClass };

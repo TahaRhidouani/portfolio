@@ -11,6 +11,7 @@ import { AnimationStateProvider, Face } from "@/components/Face";
 import { AboutMe, Achievements, Contact, Jobs, Name, OtherProjects, SelectedProjects } from "@/components/Homepage/Sections";
 import { Data } from "@/types";
 import { ReactLenis } from "@studio-freight/react-lenis";
+import { useEffect, useRef } from "react";
 import { useMediaQuery } from "usehooks-ts";
 
 gsap.registerPlugin(ScrollTrigger, Flip, MotionPath);
@@ -20,20 +21,33 @@ export function Homepage({ data }: { data: Data }) {
 
   ScrollTrigger.config({ ignoreMobileResize: true });
 
+  const lenisRef = useRef<any>(null);
+  useEffect(() => {
+    function update(time: number) {
+      lenisRef.current?.lenis?.raf(time * 1000);
+    }
+
+    gsap.ticker.add(update);
+
+    return () => {
+      gsap.ticker.remove(update);
+    };
+  });
+
   return (
-    <ReactLenis root>
+    <ReactLenis ref={lenisRef} autoRaf={false} root>
       <AnimationStateProvider>
         <div className={styles.face}>
           <Face />
         </div>
 
-        {!isMobile && <div className={styles.noise} style={{ width: "calc(100vw - " + (window.innerWidth - document.documentElement.clientWidth) + "px)" }}></div>}
+        {!isMobile && <div className={styles.noise} style={{ width: "calc(100vw - " + (window.innerWidth - document.documentElement.clientWidth) + "px)" }} />}
 
-        <div className={styles.background}></div>
+        <div className={styles.background} />
 
         {!isMobile && <Cursor />}
 
-        <Name position={data.position} resume={data.resume} />
+        <Name position={data.position} resumeExists={data.resumeExists} />
 
         <AboutMe text={data.about} />
 

@@ -10,7 +10,7 @@ import * as THREE from "three";
 import { GLTF } from "three-stdlib";
 import { useMediaQuery } from "usehooks-ts";
 
-export function Model({ offset }: { offset: React.MutableRefObject<number> }) {
+export function Model({ offset }: { offset: React.MutableRefObject<number | null> }) {
   const x = useRef<number>(window.innerWidth / 2);
   const y = useRef<number>(window.innerHeight / 2);
   const mesh = useRef<THREE.Group>(null);
@@ -51,7 +51,10 @@ export function Model({ offset }: { offset: React.MutableRefObject<number> }) {
   useFrame((s, dt) => {
     if (mesh.current && !altAnimation.current) {
       if (!isMobile) {
-        const canvasX = x.current / window.innerWidth - (offset.current ?? 0) / 100;
+        const normalizedOffset = ((offset.current ?? 0) - -25) / (25 - -25);
+        const pointerOffset = normalizedOffset * (0.8 - 0.2) + 0.2;
+
+        const canvasX = x.current / window.innerWidth - pointerOffset;
         const canvasY = -y.current / window.innerHeight + 0.5;
 
         dummy.lookAt(canvasX, canvasY, 1);
@@ -179,11 +182,13 @@ export function Model({ offset }: { offset: React.MutableRefObject<number> }) {
     };
   }, [lastMoved, setState]);
 
+  const isSleeping = state === AnimationStates.Sleep && offset.current !== null && offset.current < 100 && offset.current > -100;
+
   return (
     <group ref={mesh} dispose={null} position={[0, -0.025, 0]} scale={10}>
       <group name="Scene">
         <Html distanceFactor={5} position={[0, 0, 0.1]} scale={1}>
-          <SleepText visible={state === AnimationStates.Sleep && offset.current > 0 && offset.current < 100} direction={offset.current > 50 ? "left" : "right"} />
+          <SleepText visible={isSleeping} direction={offset.current ?? 0 > 0 ? "left" : "right"} />
         </Html>
 
         <mesh
@@ -2261,5 +2266,3 @@ type ActionName = "Idle" | "Sleeping" | "Smile";
 interface GLTFActions extends THREE.AnimationClip {
   name: ActionName;
 }
-
-useGLTF.preload("./assets/head.glb");

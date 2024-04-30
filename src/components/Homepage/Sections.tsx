@@ -25,7 +25,8 @@ pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/b
 
 export type Align = "right" | "left";
 
-export function Name({ position, resume, align = "right" }: { position: string; resume: string; align?: Align }) {
+export function Name({ position, resumeExists, align = "right" }: { position: string; resumeExists: boolean; align?: Align }) {
+  const [show, setShow] = useState<boolean>(false);
   const [showResume, setShowResume] = useState<boolean>(false);
 
   const { setShowGlasses } = useContext(AnimationStateContext);
@@ -37,7 +38,7 @@ export function Name({ position, resume, align = "right" }: { position: string; 
   const backgroundRef = useRef<HTMLDivElement>(null);
 
   useGSAP(() => {
-    if (!resume) return;
+    if (!resumeExists) return;
 
     gsap.set(ref.current, { pointerEvents: showResume ? "all" : "none" });
     gsap.set(backgroundRef.current, { opacity: showResume ? 1 : 0 });
@@ -47,10 +48,10 @@ export function Name({ position, resume, align = "right" }: { position: string; 
       xPercent: isMobile ? 0 : 50,
       yPercent: isMobile ? 0 : -50,
     });
-  }, [isMobile]);
+  }, [isMobile, resumeExists]);
 
   useGSAP(() => {
-    if (!resume) return;
+    if (!resumeExists) return;
 
     gsap.set(ref.current, { pointerEvents: showResume ? "all" : "none" });
     gsap.to(backgroundRef.current, { opacity: showResume ? 1 : 0, duration: 0.5 });
@@ -60,7 +61,7 @@ export function Name({ position, resume, align = "right" }: { position: string; 
       duration: 0.5,
       ease: "back.out(0.5)",
     });
-  }, [showResume, isMobile]);
+  }, [showResume, isMobile, resumeExists]);
 
   useLenis(
     ({ scroll }) => {
@@ -69,6 +70,12 @@ export function Name({ position, resume, align = "right" }: { position: string; 
       if (scrollProgress > 0.6 && showResume) {
         setShowResume(false);
         setShowGlasses!(false);
+      }
+
+      if (scrollProgress > 1.5) {
+        setShow(false);
+      } else {
+        setShow(true);
       }
     },
     [showResume]
@@ -89,7 +96,7 @@ export function Name({ position, resume, align = "right" }: { position: string; 
         <h1 className={styles.center}>Taha Rhidouani</h1>
         <h2 className={styles.center + " " + "secondary"}>{position}</h2>
 
-        {resume && (
+        {resumeExists && (
           <div style={{ marginTop: "5%" }}>
             <MagneticButton
               padding={"15px 40px"}
@@ -104,14 +111,14 @@ export function Name({ position, resume, align = "right" }: { position: string; 
           </div>
         )}
 
-        <Shapes />
+        {show && <Shapes />}
       </div>
 
-      {resume && (
+      {resumeExists && (
         <div ref={ref} className={styles.spotlightSection}>
           <div ref={childrenRef} className={styles.spotlightContent}>
             <div className={styles.resume}>
-              <Document file={"data:application/pdf;base64," + resume} loading={"Loading resume..."}>
+              <Document file={"./api/resume"} loading={"Loading resume..."}>
                 <Page pageNumber={1} height={isMobile ? innerHeight * 0.5 : Math.min(innerHeight - 200, 1000)} />
               </Document>
             </div>

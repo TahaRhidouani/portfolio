@@ -9,15 +9,19 @@ export function CardStack({ data }: { data: Jobs }) {
   const [index, setIndex] = useState<number>(0);
   const stackRef = useRef<HTMLDivElement>(null);
 
-  const changeIndex = (change: number) => {
+  function changeIndex(change: number) {
     setIndex(Math.max(0, Math.min(data.length - 1, index + change)));
-  };
+  }
+
+  function clampPositionValue(value: number, max: number = 3, min: number = -1) {
+    return Math.min(max, Math.max(min, value));
+  }
 
   return (
     <div className={styles.cardStack}>
       <div ref={stackRef} className={styles.stack}>
         {data.map((d, i) => (
-          <Card key={i} data={d} position={{ key: i, index: index }} changeIndex={changeIndex} />
+          <Card key={i} data={d} difference={clampPositionValue(i - index)} changeIndex={changeIndex} stackRef={stackRef} />
         ))}
       </div>
 

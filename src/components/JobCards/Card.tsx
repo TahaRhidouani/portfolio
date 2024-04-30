@@ -5,18 +5,18 @@ import { Job } from "@/types";
 import { useGSAP } from "@gsap/react";
 import { gsap } from "gsap";
 import Image from "next/image";
-import { useRef, useState } from "react";
+import { RefObject, useRef, useState } from "react";
 import { useMediaQuery } from "usehooks-ts";
 
-export function Card({ data, position, changeIndex }: { data: Job; position: { key: number; index: number }; changeIndex: (change: number) => void }) {
+export function Card({ data, difference, changeIndex, stackRef }: { data: Job; difference: number; changeIndex: (change: number) => void; stackRef?: RefObject<HTMLElement> }) {
   const [showInfo, setShowInfo] = useState<boolean>(false);
   const [scrollbarVisible, setScrollbarVisible] = useState<boolean>(false);
 
   const isMobile = useMediaQuery("(orientation: portrait) or (hover: none)");
 
-  const hasMoreInfo = "description" in data || "preview" in data || "repoUrl" in data || "websiteUrl" in data;
+  const hasMoreInfo = "description" in data || "previewType" in data || "repoUrl" in data || "websiteUrl" in data;
   const descriptionEntries = data.description?.split(/\n?- /);
-  const difference = position.key - position.index;
+  // const difference = position.key - position.index;
 
   if (difference !== 0 && showInfo) {
     setShowInfo(false);
@@ -51,7 +51,7 @@ export function Card({ data, position, changeIndex }: { data: Job; position: { k
     if (difference === 0) return "0px";
     if (difference === 1) return "2px";
     if (difference === 2) return "5px";
-    return "5px";
+    return "0px";
   };
 
   const card = useRef<HTMLDivElement>(null);
@@ -135,7 +135,7 @@ export function Card({ data, position, changeIndex }: { data: Job; position: { k
         ease: "back.out(0.3)",
       });
     }
-  }, [position]);
+  }, [difference]);
 
   useGSAP(() => {
     if (difference < 3) {
@@ -144,23 +144,28 @@ export function Card({ data, position, changeIndex }: { data: Job; position: { k
         {
           x: "100vw",
           rotate: "40deg",
+          display: difference >= 0 && difference <= 2 ? "block" : "inherit",
         },
         {
           scrollTrigger: {
-            trigger: card.current,
+            trigger: stackRef?.current ?? card.current,
             start: "center bottom",
           },
-          x: translate(),
           xPercent: "-50",
+          x: translate(),
           scale: scale(),
-          rotate: difference < 0 ? "40deg" : "0deg",
           opacity: opacity(),
+          rotate: difference < 0 ? "40deg" : "0deg",
           filter: "blur(" + blur() + ")",
           duration: 0.8,
           delay: (3 - difference) / 10,
           ease: "back.out(0.3)",
           onComplete: () => {
             ready.current = true;
+
+            if (difference < 0 || difference > 2) {
+              gsap.set(card.current, { display: "none" });
+            }
           },
         }
       );
@@ -188,7 +193,7 @@ export function Card({ data, position, changeIndex }: { data: Job; position: { k
       ref={card}
       className={styles.card}
       style={{
-        zIndex: 9999 - position.key,
+        zIndex: 9999 - difference,
         background: "linear-gradient(300deg, " + addAlpha(data.colors[0], 0.1) + ", " + addAlpha(data.colors[1], 0.1) + ", " + addAlpha(data.colors[2], 0.1) + "), #3f3f3f",
       }}
       onClick={() => {
@@ -207,7 +212,7 @@ export function Card({ data, position, changeIndex }: { data: Job; position: { k
         data-smile-animation={true}
         style={{ pointerEvents: difference === 0 && hasMoreInfo ? "all" : "none" }}
       >
-        <Image ref={logo} className={styles.logo} width={500} height={500} draggable="false" src={data.logo} alt={data.company} />
+        <Image ref={logo} className={styles.logo} width={500} height={500} draggable="false" src={"/api/jobs/" + data.id + "/logo"} alt={data.company} />
 
         <div
           style={{
@@ -268,15 +273,24 @@ export function Card({ data, position, changeIndex }: { data: Job; position: { k
               </MaskText>
             ))}
             <br />
-            {data.preview && (
-              <MaskText show={showInfo} duration={1} delay={showInfo ? 0.5 : 0}>
+            {data.previewType && (
+              <MaskText show={showInfo} duration={1} delay={showInfo ? (descriptionEntries ? 0.5 : 0) : 0}>
                 <>
                   {(() => {
-                    switch (data.preview.split(":")[1].split("/")[0]) {
+                    switch (data.previewType) {
                       case "image":
-                        return <Image style={{ width: "100%", height: "auto" }} height={0} width={0} draggable="false" src={data.preview} alt={data.company} />;
+                        return (
+                          <Image
+                            style={{ width: "100%", height: "auto" }}
+                            height={card.current?.clientHeight ?? 0}
+                            width={card.current?.clientWidth ?? 0}
+                            draggable="false"
+                            src={"/api/jobs/" + data.id + "/preview"}
+                            alt={data.company}
+                          />
+                        );
                       case "video":
-                        return <video src={data.preview} style={{ width: "100%", height: "auto" }} playsInline loop muted autoPlay disablePictureInPicture />;
+                        return <video src={"/api/jobs/" + data.id + "/preview"} style={{ width: "100%", height: "auto" }} playsInline loop muted autoPlay disablePictureInPicture />;
                       default:
                         return <></>;
                     }

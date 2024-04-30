@@ -7,6 +7,7 @@ import { Jobs } from "@/models/Jobs";
 import { Projects } from "@/models/Projects";
 import { Achievements as AchievementsType, Jobs as JobsType, Projects as ProjectsType } from "@/types";
 import { drive } from "@googleapis/drive";
+import { Types } from "mongoose";
 import { getServerSession } from "next-auth/next";
 import { revalidatePath } from "next/cache";
 
@@ -143,7 +144,16 @@ export async function updateJobData(jobs: JobsType): Promise<DataUpdateRes> {
 
       await Jobs.deleteMany({});
 
-      await Jobs.insertMany(jobs);
+      await Jobs.insertMany(
+        jobs.map((j) => {
+          const id = new Types.ObjectId();
+          return {
+            ...j,
+            _id: id,
+            id: id,
+          };
+        })
+      );
     } catch (e: any) {
       return { error: true, message: e.message };
     }
@@ -345,7 +355,16 @@ export async function updateAchievements(achievements: AchievementsType): Promis
 
       await Achievements.deleteMany({});
 
-      await Achievements.insertMany(achievements);
+      await Achievements.insertMany(
+        achievements.map((a) => {
+          const id = new Types.ObjectId();
+          return {
+            ...a,
+            _id: id,
+            id: id,
+          };
+        })
+      );
     } catch (e: any) {
       return { error: true, message: e.message };
     }

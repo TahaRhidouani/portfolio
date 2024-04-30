@@ -1,65 +1,58 @@
-import {
-    ModelOptions,
-    Severity,
-    getModelForClass,
-    prop,
-    ReturnModelType,
-    index,
-} from "@typegoose/typegoose";
+import { ModelOptions, ReturnModelType, Severity, getModelForClass, prop } from "@typegoose/typegoose";
 import mongoose from "mongoose";
 
 @ModelOptions({
-    schemaOptions: {
-        timestamps: false,
-        collection: "projects",
-    },
-    options: {
-        allowMixed: Severity.ALLOW,
-        customName: "Projects"
-    },
+  schemaOptions: {
+    timestamps: false,
+    collection: "projects",
+  },
+  options: {
+    allowMixed: Severity.ALLOW,
+    customName: "Projects",
+  },
 })
-
 class ProjectsClass {
+  @prop({ required: true })
+  id: string;
 
-    @prop({required: true, unique: true})
-    repoName: string;
+  @prop({ required: true, unique: true })
+  repoName: string;
 
-    @prop({required: true, unique: true})
-    name: string;
+  @prop({ required: true, unique: true })
+  name: string;
 
-    @prop({required: true})
-    trailerUrl: string;
+  @prop({ required: true })
+  trailerUrl: string;
 
-    @prop()
-    websiteUrl: string;
+  @prop()
+  websiteUrl: string;
 
-    @prop()
-    repoUrl: string;
+  @prop()
+  repoUrl: string;
 
-    @prop()
-    rawRepoUrl: string;
+  @prop()
+  rawRepoUrl: string;
 
-    @prop({required: true})
-    description: string;
+  @prop({ required: true })
+  description: string;
 
-    @prop()
-    content: string;
+  @prop()
+  content: string;
 
-    @prop()
-    images: string[];
+  @prop()
+  images: string[];
 
-    @prop({default: false})
-    selected: boolean
+  @prop({ default: false })
+  selected: boolean;
 
-    @prop({default: true})
-    visible: boolean
+  @prop({ default: true })
+  visible: boolean;
 
-    @prop({required: true})
-    order: number
-
+  @prop({ required: true })
+  order: number;
 }
 
-type ProjectsModelType = ReturnModelType<typeof ProjectsClass>
+type ProjectsModelType = ReturnModelType<typeof ProjectsClass>;
+const Projects = (mongoose.models.Projects as ProjectsModelType) ?? getModelForClass(ProjectsClass);
 
-const Projects = mongoose.models.Projects as ProjectsModelType ?? getModelForClass(ProjectsClass);
-export {Projects, ProjectsClass};
+export { Projects, ProjectsClass };

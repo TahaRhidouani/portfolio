@@ -1,40 +1,42 @@
 import { AnimationStateContext } from "@/components/Face/AnimationStateContext";
 import { Model } from "@/components/Face/Model";
 import { useGSAP } from "@gsap/react";
-import { Float } from "@react-three/drei";
+import { Float, PerformanceMonitor, useProgress } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import { EffectComposer, N8AO } from "@react-three/postprocessing";
 import { useLenis } from "@studio-freight/react-lenis";
 import { gsap } from "gsap";
-import { Suspense, useContext, useEffect, useRef } from "react";
+import { Suspense, useContext, useEffect, useRef, useState } from "react";
 import { useMediaQuery } from "usehooks-ts";
 import styles from "./style.module.css";
 
 export function Face() {
   const { lastMoved } = useContext(AnimationStateContext);
+  const progress = useProgress();
 
   const isMobile = useMediaQuery("(orientation: portrait) or (hover: none)");
 
   const ref = useRef<HTMLDivElement>(null);
-  const offset = useRef<number>(isMobile ? 50 : 20);
+  const offset = useRef<number | null>(null);
+  const introDone = useRef<boolean>(false);
 
   const scrollData = [
-    [0, 20],
-    [0.6, 20],
-    [1.2, 80],
-    [1.8, 80],
-    [2.2, 20],
-    [2.8, 20],
-    [3, 50],
-    [4.2, 120],
-    [4.2, -20],
-    [4.8, -20],
-    [5.8, 80],
-    [6.4, 80],
-    [6.8, 20],
-    [7.2, 20],
-    [7.8, 80],
-    [10, 80],
+    [0, -25],
+    [0.6, -25],
+    [1.2, 25],
+    [1.8, 25],
+    [2.2, -25],
+    [2.8, -25],
+    [3, 0],
+    [4.2, 100],
+    [4.2, -100],
+    [4.8, -100],
+    [5.8, 25],
+    [6.4, 25],
+    [6.8, -25],
+    [7.2, -25],
+    [7.8, 25],
+    [10, 25],
   ];
 
   const scrollRange = scrollData.map((item) => item[0]);
@@ -61,35 +63,39 @@ export function Face() {
 
         offset.current = positionRange[scrollIndex - 1] + diffPosition * normalizedProgress;
         updateOffset(offset.current);
+
+        if (!introDone.current && offset.current !== null && progress.loaded === progress.total && progress.total > 0) intro();
       } else {
-        offset.current = 50;
+        offset.current = 0;
       }
     },
-    [isMobile]
+    [isMobile, progress]
   );
 
-  const { contextSafe } = useGSAP(() => {
-    gsap.fromTo(
-      ref.current,
-      {
-        x: isMobile ? "0%" : offset.current > 50 ? "100%" : "-100%",
-        y: isMobile ? "-100%" : "0%",
-      },
-      {
-        x: "0%",
-        y: "0%",
-        scrollTrigger: {
-          trigger: ref.current,
+  const { contextSafe } = useGSAP();
+
+  const intro = contextSafe(() => {
+    if (offset.current) {
+      introDone.current = true;
+      gsap.fromTo(
+        ref.current,
+        {
+          x: isMobile ? "0%" : offset.current > 0 ? "100%" : "-100%",
+          y: isMobile ? "-100%" : "0%",
         },
-        delay: 0.2,
-        duration: 1.3,
-        ease: "back.inOut(0.8)",
-      }
-    );
-  }, [isMobile]);
+        {
+          x: isMobile ? "0%" : offset.current + "%",
+          y: "0%",
+          delay: 0.2,
+          duration: 1.3,
+          ease: "back.inOut(0.8)",
+        }
+      );
+    }
+  });
 
   const updateOffset = contextSafe((offset: number) => {
-    gsap.quickSetter(ref.current, "left", "%")(offset);
+    gsap.quickSetter(ref.current, "x", "%")(offset);
   });
 
   useEffect(() => {
@@ -104,15 +110,24 @@ export function Face() {
     };
   }, [lastMoved]);
 
+  const [dpr, setDpr] = useState<number>(window.devicePixelRatio);
+
   return (
-    <div ref={ref} className={styles.model} style={{ left: offset + "%", transform: "translateX(-50%)" }}>
-      <Canvas style={{ pointerEvents: "none" }}>
+    <div ref={ref} className={styles.model}>
+      <Canvas
+        style={{ pointerEvents: "none" }}
+        gl={{
+          powerPreference: "high-performance",
+        }}
+        dpr={dpr}
+      >
+        <PerformanceMonitor bounds={(refreshrate) => (refreshrate > 90 ? [60, 90] : [57, 60])} factor={1} onChange={({ factor }) => setDpr(0.5 + (window.devicePixelRatio - 0.5) * factor)} />
         <Suspense>
           <Float rotationIntensity={isMobile ? 2 : 0} floatIntensity={isMobile ? 2 : 1} speed={2}>
             <Model offset={offset} />
           </Float>
           <EffectComposer>
-            <N8AO halfRes color="black" aoRadius={2} intensity={1} aoSamples={6} denoiseSamples={4} />
+            <N8AO halfRes quality="performance" depthAwareUpsampling={false} color="black" aoRadius={2} intensity={1} />
           </EffectComposer>
         </Suspense>
         <ambientLight intensity={2} color={"white"} />

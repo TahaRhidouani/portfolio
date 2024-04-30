@@ -9,7 +9,7 @@ export type Data = {
   };
   jobs: Jobs;
   achievements: Achievements;
-  resume: string;
+  resumeExists: boolean;
   resumeLocation?: string;
 };
 
@@ -20,12 +20,14 @@ export type Year = number;
 
 export type Jobs = Job[];
 export type Job = {
+  id?: string;
   company: string;
   position: string;
   type?: string;
   date: Dates;
   description?: string;
   preview?: string;
+  previewType?: "image" | "video";
   colors: string[];
   logo: string;
   repoUrl?: string;
@@ -50,7 +52,8 @@ export type Project = {
 
 export type Achievements = Achievement[];
 export type Achievement = {
-  logo: string;
+  id?: string;
+  logo?: string;
   title: string;
   description: string;
   url: string;

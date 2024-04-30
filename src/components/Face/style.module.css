@@ -14,7 +14,6 @@
 @media (orientation: portrait) or (hover: none) {
   .model {
     top: -15%;
-    left: 50% !important;
     height: 80svh;
   }
 }
