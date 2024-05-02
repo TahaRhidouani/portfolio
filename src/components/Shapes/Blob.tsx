@@ -64,7 +64,7 @@ export const Blob = forwardRef(function Blob(
     });
   });
 
-  const [shape, setShape] = useState<string>("");
+  const [shape, setShape] = useState<string>(randomVariation());
 
   useEffect(() => {
     setShape(randomVariation());

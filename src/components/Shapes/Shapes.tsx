@@ -1,9 +1,9 @@
 import { Blob } from "@/components/Shapes/Blob";
-import React, { CSSProperties, useRef } from "react";
+import { BlurCircle } from "@/components/Shapes/BlurCircle";
+import { Circle } from "@/components/Shapes/Circle";
 import { useGSAP } from "@gsap/react";
 import { gsap } from "gsap";
-import { Circle } from "@/components/Shapes/Circle";
-import { BlurCircle } from "@/components/Shapes/BlurCircle";
+import { CSSProperties, useRef } from "react";
 
 export function Shapes() {
   const shape1 = useRef(null);

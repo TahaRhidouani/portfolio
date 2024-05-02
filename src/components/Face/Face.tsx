@@ -110,7 +110,7 @@ export function Face() {
     };
   }, [lastMoved]);
 
-  const [dpr, setDpr] = useState<number>(window.devicePixelRatio);
+  const [dpr, setDpr] = useState<number>(1);
 
   return (
     <div ref={ref} className={styles.model}>
@@ -121,16 +121,17 @@ export function Face() {
         }}
         dpr={dpr}
       >
-        <PerformanceMonitor bounds={(refreshrate) => (refreshrate > 90 ? [60, 90] : [57, 60])} factor={1} onChange={({ factor }) => setDpr(0.5 + (window.devicePixelRatio - 0.5) * factor)} />
-        <Suspense>
-          <Float rotationIntensity={isMobile ? 2 : 0} floatIntensity={isMobile ? 2 : 1} speed={2}>
-            <Model offset={offset} />
-          </Float>
-          <EffectComposer>
-            <N8AO halfRes quality="performance" depthAwareUpsampling={false} color="black" aoRadius={2} intensity={1} />
-          </EffectComposer>
-        </Suspense>
-        <ambientLight intensity={2} color={"white"} />
+        <PerformanceMonitor onChange={({ factor }) => setDpr(Math.round(0.5 + 1.5 * factor))}>
+          <Suspense>
+            <Float rotationIntensity={isMobile ? 2 : 0} floatIntensity={isMobile ? 2 : 1} speed={2}>
+              <Model offset={offset} />
+            </Float>
+            <EffectComposer>
+              <N8AO halfRes quality="performance" depthAwareUpsampling={false} color="black" aoRadius={2} intensity={1} />
+            </EffectComposer>
+          </Suspense>
+          <ambientLight intensity={2} color={"white"} />
+        </PerformanceMonitor>
       </Canvas>
     </div>
   );
