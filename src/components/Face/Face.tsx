@@ -1,12 +1,12 @@
 import { AnimationStateContext } from "@/components/Face/AnimationStateContext";
 import { Model } from "@/components/Face/Model";
 import { useGSAP } from "@gsap/react";
-import { Float, PerformanceMonitor, useProgress } from "@react-three/drei";
+import { Float, useProgress } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import { EffectComposer, N8AO } from "@react-three/postprocessing";
 import { gsap } from "gsap";
 import { useLenis } from "lenis/react";
-import { Suspense, useContext, useEffect, useRef, useState } from "react";
+import { Suspense, useContext, useEffect, useRef } from "react";
 import { useMediaQuery } from "usehooks-ts";
 import styles from "./style.module.css";
 
@@ -110,8 +110,6 @@ export function Face() {
     };
   }, [lastMoved]);
 
-  const [dpr, setDpr] = useState<number>(1);
-
   return (
     <div ref={ref} className={styles.model}>
       <Canvas
@@ -119,19 +117,16 @@ export function Face() {
         gl={{
           powerPreference: "high-performance",
         }}
-        dpr={dpr}
       >
-        <PerformanceMonitor onChange={({ factor }) => setDpr(Math.round(0.5 + 1.5 * factor))}>
-          <Suspense>
-            <Float rotationIntensity={isMobile ? 2 : 0} floatIntensity={isMobile ? 2 : 1} speed={2}>
-              <Model offset={offset} />
-            </Float>
-            <EffectComposer>
-              <N8AO halfRes quality="performance" depthAwareUpsampling={false} color="black" aoRadius={2} intensity={1} />
-            </EffectComposer>
-          </Suspense>
-          <ambientLight intensity={2} color={"white"} />
-        </PerformanceMonitor>
+        <Suspense>
+          <Float rotationIntensity={isMobile ? 2 : 0} floatIntensity={isMobile ? 2 : 1} speed={2}>
+            <Model offset={offset} />
+          </Float>
+          <EffectComposer>
+            <N8AO halfRes quality="performance" depthAwareUpsampling={false} color="black" aoRadius={2} intensity={5} />
+          </EffectComposer>
+        </Suspense>
+        <ambientLight intensity={2} color={"white"} />
       </Canvas>
     </div>
   );

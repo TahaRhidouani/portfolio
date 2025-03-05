@@ -203,7 +203,7 @@ export function Model({ offset }: { offset: RefObject<number | null> }) {
           scale={0.04336883}
           renderOrder={1}
         >
-          <Outlines thickness={0.04} color="black" />
+          <Outlines opacity={1} thickness={3} color="black" />
         </mesh>
         <group name="spine" position={[0, 0.28888801, -0.04879069]} rotation={[0.14086974, 2.4e-7, 0]} />
         <group name="spine001" position={[0, 0.4191733, -0.03031507]} rotation={[-0.11397948, 2.4e-7, 0]} />

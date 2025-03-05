@@ -21,7 +21,7 @@ import { Card, CardFullscreen, CardProvider } from "../ProjectsCard";
 import ProjectsList from "../ProjectsList";
 import Shapes from "../Shapes";
 
-pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.js`;
+pdfjs.GlobalWorkerOptions.workerSrc = new URL("pdfjs-dist/build/pdf.worker.min.mjs", import.meta.url).toString();
 
 export type Align = "right" | "left";
 
