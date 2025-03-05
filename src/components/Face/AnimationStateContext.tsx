@@ -1,4 +1,4 @@
-import React, { createContext, MutableRefObject, ReactNode, useRef, useState } from "react";
+import { createContext, ReactNode, RefObject, useRef, useState } from "react";
 
 export enum AnimationStates {
   Idle,
@@ -7,7 +7,7 @@ export enum AnimationStates {
 }
 
 export const AnimationStateContext = createContext<{
-  lastMoved?: MutableRefObject<number>;
+  lastMoved?: RefObject<number>;
   state?: AnimationStates;
   setState?: (state: AnimationStates) => void;
   showGlasses?: boolean;

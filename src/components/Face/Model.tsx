@@ -5,20 +5,20 @@ import { Html, Outlines, useAnimations, useGLTF } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import { gsap } from "gsap";
 import { easing } from "maath";
-import React, { useContext, useEffect, useRef, useState } from "react";
+import { RefObject, useContext, useEffect, useRef, useState } from "react";
 import * as THREE from "three";
 import { GLTF } from "three-stdlib";
 import { useMediaQuery } from "usehooks-ts";
 
-export function Model({ offset }: { offset: React.MutableRefObject<number | null> }) {
+export function Model({ offset }: { offset: RefObject<number | null> }) {
   const x = useRef<number>(window.innerWidth / 2);
   const y = useRef<number>(window.innerHeight / 2);
   const mesh = useRef<THREE.Group>(null);
   const currentRotation = useRef<{ x: number; y: number; z: number }>({ x: 0, y: 0, z: 0 });
   const glasses = useRef<THREE.Mesh>(null);
   const altAnimation = useRef<boolean>(false);
-  const smileTimeout = useRef<ReturnType<typeof setTimeout>>();
-  const lastMovedFace = useRef<number>();
+  const smileTimeout = useRef<ReturnType<typeof setTimeout>>(undefined);
+  const lastMovedFace = useRef<number>(null);
   const lastAnimationState = useRef<any>(AnimationStates.Idle);
 
   const mobileOrientation = new THREE.Euler(0, 0, 0);

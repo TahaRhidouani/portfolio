@@ -2,9 +2,10 @@ import connectDB from "@/lib/connectDB";
 import { Jobs } from "@/models/Jobs";
 import { NextResponse } from "next/server";
 
-export async function GET(req: Request, { params }: { params: { id: string } }): Promise<NextResponse> {
+export async function GET(req: Request, data: { params: Promise<{ id: string }> }): Promise<NextResponse> {
   await connectDB();
 
+  const params = await data.params;
   const jobs = await Jobs.findOne({ id: params.id }, { logo: 1 }).lean().exec();
 
   if (jobs) {

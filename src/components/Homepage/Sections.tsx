@@ -1,7 +1,7 @@
 import { AnimationStateContext } from "@/components/Face";
 import { useGSAP } from "@gsap/react";
-import { useLenis } from "@studio-freight/react-lenis";
 import gsap from "gsap";
+import { useLenis } from "lenis/react";
 import { useContext, useEffect, useRef, useState } from "react";
 import { Document, Page, pdfjs } from "react-pdf";
 import "react-pdf/dist/Page/AnnotationLayer.css";

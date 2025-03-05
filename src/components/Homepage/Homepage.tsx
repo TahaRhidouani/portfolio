@@ -1,5 +1,4 @@
 "use client";
-
 import gsap from "gsap";
 import Flip from "gsap/Flip";
 import MotionPath from "gsap/MotionPathPlugin";
@@ -10,7 +9,7 @@ import Cursor from "@/components/Cursor";
 import { AnimationStateProvider, Face } from "@/components/Face";
 import { AboutMe, Achievements, Contact, Jobs, Name, OtherProjects, SelectedProjects } from "@/components/Homepage/Sections";
 import { Data } from "@/types";
-import { ReactLenis } from "@studio-freight/react-lenis";
+import { ReactLenis } from "lenis/react";
 import { useEffect, useRef } from "react";
 import { useMediaQuery } from "usehooks-ts";
 

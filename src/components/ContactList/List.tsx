@@ -1,9 +1,9 @@
-import styles from "./style.module.css";
-import React, { useRef } from "react";
-import Image from "next/image";
-import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
+import { gsap } from "gsap";
+import Image from "next/image";
+import { useRef } from "react";
 import { useMediaQuery } from "usehooks-ts";
+import styles from "./style.module.css";
 
 export type Contact = {
   icon: string;
@@ -52,7 +52,7 @@ export function Entry({ contact }: { contact: Contact }) {
   const isMobile = useMediaQuery("(orientation: portrait) or (hover: none)");
 
   const content = useRef<HTMLAnchorElement>(null);
-  const timeline = useRef<gsap.core.Timeline>();
+  const timeline = useRef<gsap.core.Timeline>(null);
 
   const { contextSafe } = useGSAP(
     () => {

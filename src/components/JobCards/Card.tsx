@@ -8,7 +8,7 @@ import Image from "next/image";
 import { RefObject, useRef, useState } from "react";
 import { useMediaQuery } from "usehooks-ts";
 
-export function Card({ data, difference, changeIndex, stackRef }: { data: Job; difference: number; changeIndex: (change: number) => void; stackRef?: RefObject<HTMLElement> }) {
+export function Card({ data, difference, changeIndex, stackRef }: { data: Job; difference: number; changeIndex: (change: number) => void; stackRef?: RefObject<HTMLElement | null> }) {
   const [showInfo, setShowInfo] = useState<boolean>(false);
   const [scrollbarVisible, setScrollbarVisible] = useState<boolean>(false);
 
@@ -60,7 +60,7 @@ export function Card({ data, difference, changeIndex, stackRef }: { data: Job; d
   const linkBlock = useRef<HTMLDivElement>(null);
   const descriptionBlock = useRef<HTMLDivElement>(null);
   const ready = useRef<boolean>(false);
-  const showInfoTimeline = useRef<gsap.core.Timeline>();
+  const showInfoTimeline = useRef<gsap.core.Timeline>(null);
 
   useGSAP(() => {
     showInfoTimeline.current?.kill();

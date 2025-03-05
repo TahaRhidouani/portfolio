@@ -7,7 +7,7 @@ import styles from "./style.module.css";
 
 export function Banner({ data, direction = "right", speed = 1 }: { data: Achievements; direction?: "right" | "left"; speed?: number }) {
   const itemRefs = useRef<HTMLAnchorElement[]>([]);
-  const loopRef = useRef<gsap.core.Timeline>();
+  const loopRef = useRef<gsap.core.Timeline>(null);
 
   useGSAP(() => {
     setTimeout(() => {

@@ -1,3 +1,8 @@
-import {Homepage} from "./Homepage"
+"use client";
+import dynamic from "next/dynamic";
 
-export default Homepage
+const Homepage = dynamic(() => import("./Homepage").then((mod) => mod.Homepage), {
+  ssr: false,
+});
+
+export default Homepage;

@@ -1,3 +1,8 @@
-import {Dashboard} from "./Dashboard"
+"use client";
+import dynamic from "next/dynamic";
 
-export default Dashboard
+const Dashboard = dynamic(() => import("./Dashboard").then((mod) => mod.Dashboard), {
+  ssr: false,
+});
+
+export default Dashboard;

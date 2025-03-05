@@ -1,28 +1,29 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-    webpack: (config) => {
-        config.resolve.alias.canvas = false;
-        return config;
+  webpack: (config) => {
+    config.resolve.alias.canvas = false;
+    return config;
+  },
+  experimental: {
+    reactCompiler: true,
+    serverActions: {
+      bodySizeLimit: "30mb",
     },
-    experimental: {
-        serverActions: {
-            bodySizeLimit: "30mb"
-        }
-    },
-    images: {
-        remotePatterns: [
-            {
-                protocol: 'https',
-                hostname: 'github.com',
-                port: '',
-            },
-            {
-                protocol: 'https',
-                hostname: 'raw.githubusercontent.com',
-                port: '',
-            },
-        ],
-    },
-}
+  },
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "github.com",
+        port: "",
+      },
+      {
+        protocol: "https",
+        hostname: "raw.githubusercontent.com",
+        port: "",
+      },
+    ],
+  },
+};
 
-module.exports = nextConfig
+module.exports = nextConfig;

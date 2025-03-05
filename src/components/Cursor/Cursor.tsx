@@ -2,7 +2,7 @@ import { AnimationStateContext, AnimationStates } from "@/components/Face/Animat
 import { RollingCounter } from "@/components/RollingCounter/RollingCounter";
 import { useGSAP } from "@gsap/react";
 import { gsap } from "gsap";
-import { useCallback, useContext, useRef, useState } from "react";
+import { useContext, useRef, useState } from "react";
 import styles from "./style.module.css";
 
 type CursorProps = {
@@ -64,7 +64,7 @@ export function Cursor({ animationDuration = 0.5, magneticAnimationDuration = 1,
   const gelly = useRef<boolean>(true);
   const magnetic = useRef<boolean>(false);
   const sticky = useRef<boolean>(false);
-  const timeout = useRef<ReturnType<typeof setTimeout>>();
+  const timeout = useRef<NodeJS.Timeout>(undefined);
 
   const position = useRef<Coordinates>({ x: window.innerWidth / 2, y: window.innerHeight / 2 });
   const velocity = useRef<Coordinates>({ x: 0, y: 0 });
@@ -85,7 +85,7 @@ export function Cursor({ animationDuration = 0.5, magneticAnimationDuration = 1,
     setter.current.rt = gsap.quickSetter(cursorInner.current, "rotate", "deg");
   });
 
-  const loop = useCallback(() => {
+  const loop = () => {
     const rotation = getAngle(velocity.current.x, velocity.current.y);
     const scale = getScale(velocity.current.x, velocity.current.y);
 
@@ -106,7 +106,7 @@ export function Cursor({ animationDuration = 0.5, magneticAnimationDuration = 1,
       setter.current.r!(0);
       setter.current.rt!(0);
     }
-  }, []);
+  };
 
   useGSAP(() => {
     function getAttributes(target: HTMLElement): Attributes {

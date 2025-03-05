@@ -1,5 +1,5 @@
 import { gsap } from "gsap";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export function RollingCounter({ text, delay = 0 }: { text: string; delay?: number }) {
   const txt = useRef<HTMLHeadingElement>(null);
@@ -15,7 +15,7 @@ export function RollingCounter({ text, delay = 0 }: { text: string; delay?: numb
     }
   }, [text, newTextData]);
 
-  const updateText = useCallback(() => {
+  const updateText = () => {
     if (!txtSwap.current) return;
 
     txtSwap.current.innerHTML = newTextData;
@@ -34,7 +34,7 @@ export function RollingCounter({ text, delay = 0 }: { text: string; delay?: numb
 
     tl.fromTo(txt.current, { y: "-50%" }, { y: "150%", duration: duration, delay: delay, ease: "linear" }, "start");
     tl.fromTo(txtSwap.current, { y: "-100%" }, { y: "50%", duration: duration, delay: delay, ease: "linear" }, "start");
-  }, [delay, newTextData, oldTextData]);
+  };
 
   useEffect(() => {
     updateText();

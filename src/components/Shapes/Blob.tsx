@@ -1,6 +1,6 @@
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
-import React, { CSSProperties, forwardRef, useCallback, useEffect, useId, useRef, useState } from "react";
+import React, { CSSProperties, forwardRef, useEffect, useId, useRef, useState } from "react";
 
 export const regularBlobs = [
   "M39.3,-58.7C53.3,-60.1,68.5,-54.2,72.8,-43.2C77.2,-32.2,70.8,-16.1,71,0.1C71.3,16.4,78.2,32.8,72.4,41.2C66.5,49.6,47.8,50,33.6,56.7C19.4,63.5,9.7,76.4,-1,78.2C-11.8,80.1,-23.6,70.7,-36.5,63.2C-49.5,55.8,-63.5,50.3,-65,40.1C-66.5,29.9,-55.3,14.9,-53,1.3C-50.8,-12.3,-57.4,-24.7,-53.8,-31.2C-50.2,-37.6,-36.3,-38.3,-25.7,-38.8C-15,-39.3,-7.5,-39.7,2.6,-44.2C12.7,-48.7,25.4,-57.3,39.3,-58.7Z",
@@ -42,10 +42,10 @@ export const Blob = forwardRef(function Blob(
   const blob = useRef<SVGPathElement>(null);
   const id = useId();
 
-  const randomVariation = useCallback(() => {
+  const randomVariation = () => {
     const id = Math.floor(Math.random() * (extraDeformed ? deformedBlobs.length : regularBlobs.length));
     return extraDeformed ? deformedBlobs[id] : regularBlobs[id];
-  }, [extraDeformed]);
+  };
 
   const { contextSafe } = useGSAP(() => {
     if (animate) {
