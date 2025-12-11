@@ -5,11 +5,11 @@ const nextConfig = {
     return config;
   },
   experimental: {
-    reactCompiler: true,
     serverActions: {
       bodySizeLimit: "30mb",
     },
   },
+  reactCompiler: true,
   images: {
     remotePatterns: [
       {
