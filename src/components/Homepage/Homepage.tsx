@@ -1,6 +1,6 @@
 "use client";
 import gsap from "gsap";
-import Flip from "gsap/Flip";
+import { Flip } from "gsap/all";
 import MotionPath from "gsap/MotionPathPlugin";
 import ScrollTrigger from "gsap/ScrollTrigger";
 import styles from "./style.module.css";
@@ -9,11 +9,12 @@ import Cursor from "@/components/Cursor";
 import { AnimationStateProvider, Face } from "@/components/Face";
 import { AboutMe, Achievements, Contact, Jobs, Name, OtherProjects, SelectedProjects } from "@/components/Homepage/Sections";
 import { Data } from "@/types";
+import { useGSAP } from "@gsap/react";
 import { ReactLenis } from "lenis/react";
 import { useEffect, useRef } from "react";
 import { useMediaQuery } from "usehooks-ts";
 
-gsap.registerPlugin(ScrollTrigger, Flip, MotionPath);
+gsap.registerPlugin(ScrollTrigger, Flip, MotionPath, useGSAP);
 
 export function Homepage({ data }: { data: Data }) {
   const isMobile = useMediaQuery("(orientation: portrait) or (hover: none)");
@@ -40,7 +41,9 @@ export function Homepage({ data }: { data: Data }) {
           <Face />
         </div>
 
-        {!isMobile && <div className={styles.noise} style={{ width: "calc(100vw - " + (window.innerWidth - document.documentElement.clientWidth) + "px)" }} />}
+        {!isMobile && (
+          <div className={styles.noise} style={{ width: "calc(100vw - " + (window.innerWidth - document.documentElement.clientWidth) + "px)" }} />
+        )}
 
         <div className={styles.background} />
 

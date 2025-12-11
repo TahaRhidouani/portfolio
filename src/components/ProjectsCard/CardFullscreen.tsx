@@ -49,7 +49,7 @@ export const CardFullscreen = forwardRef(function CardFullscreen({}, ref: Forwar
 
   const isAbsoluteUrl = new RegExp("^(?:[a-z+]+:)?//", "i");
 
-  const content: ReactNode[] = compiler(data?.content ?? "", {
+  const content = compiler(data?.content ?? "", {
     createElement(type, props, children) {
       return (
         <React.Fragment key={props.key}>
@@ -88,7 +88,9 @@ export const CardFullscreen = forwardRef(function CardFullscreen({}, ref: Forwar
         },
       },
       img: {
-        component: ({ children, src, ...props }) => <Image src={isAbsoluteUrl.test(src) ? src : data?.rawRepoUrl + src} alt={props.alt || ""} {...props} />,
+        component: ({ children, src, ...props }) => (
+          <Image src={isAbsoluteUrl.test(src) ? src : data?.rawRepoUrl + src} alt={props.alt || ""} {...props} />
+        ),
         props: {
           style: {
             marginBlock: "20px",
@@ -106,7 +108,7 @@ export const CardFullscreen = forwardRef(function CardFullscreen({}, ref: Forwar
       },
     },
     wrapper: null,
-  });
+  }) as ReactNode[];
 
   return (
     <div ref={ref} className={styles.fullscreen} data-lenis-prevent>

@@ -2,7 +2,7 @@ import { CardContext } from "@/components/ProjectsCard/CardContext";
 import { Project } from "@/types";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
-import Flip from "gsap/Flip";
+import { Flip } from "gsap/all";
 import { useLenis } from "lenis/react";
 import { useContext, useRef } from "react";
 import { useMediaQuery } from "usehooks-ts";
@@ -124,7 +124,14 @@ export function Card({ data }: { data: Project }) {
 
   return (
     <div ref={wrapRef} className={styles.cardWrap}>
-      <div ref={ref} onClick={() => (isMobile ? window.open(data.repoUrl) : toggleCard())} className={styles.card} data-cursor-size="100px" data-cursor-text={"More info"} data-smile-animation={true}>
+      <div
+        ref={ref}
+        onClick={() => (isMobile ? window.open(data.repoUrl) : toggleCard())}
+        className={styles.card}
+        data-cursor-size="100px"
+        data-cursor-text={"More info"}
+        data-smile-animation={true}
+      >
         <div className={styles.cardFront}>
           <div className={styles.contentFront}>
             <h2>{data.name}</h2>

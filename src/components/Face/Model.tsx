@@ -28,7 +28,7 @@ export function Model({ offset }: { offset: RefObject<number | null> }) {
 
   const isMobile = useMediaQuery("(orientation: portrait) or (hover: none)");
 
-  const { nodes, materials, animations } = useGLTF("./assets/head.glb") as GLTFResult;
+  const { nodes, materials, animations } = useGLTF("./assets/head.glb") as unknown as GLTFResult;
   const { actions } = useAnimations<GLTFActions>(animations, mesh);
 
   const { lastMoved, state, setState, showGlasses } = useContext(AnimationStateContext);
@@ -1299,20 +1299,68 @@ export function Model({ offset }: { offset: RefObject<number | null> }) {
           <primitive object={nodes["MCH-lip_offsetTR001"]} />
           <primitive object={nodes.lipTR001_1} />
         </group>
-        <skinnedMesh name="Eyel" geometry={nodes.Eyel.geometry} material={materials["eye."]} skeleton={nodes.Eyel.skeleton} position={[0, -0.86104661, 0]} />
-        <skinnedMesh name="Eyer" geometry={nodes.Eyer.geometry} material={materials["eye."]} skeleton={nodes.Eyer.skeleton} position={[0, -0.86104661, 0]} />
-        <skinnedMesh name="Eyebrows" geometry={nodes.Eyebrows.geometry} material={materials.head} skeleton={nodes.Eyebrows.skeleton} position={[0, -0.86104661, 0]} />
-        <skinnedMesh name="Hair" geometry={nodes.Hair.geometry} material={materials.HairTop} skeleton={nodes.Hair.skeleton} position={[0, -0.86104661, 0]} />
+        <skinnedMesh
+          name="Eyel"
+          geometry={nodes.Eyel.geometry}
+          material={materials["eye."]}
+          skeleton={nodes.Eyel.skeleton}
+          position={[0, -0.86104661, 0]}
+        />
+        <skinnedMesh
+          name="Eyer"
+          geometry={nodes.Eyer.geometry}
+          material={materials["eye."]}
+          skeleton={nodes.Eyer.skeleton}
+          position={[0, -0.86104661, 0]}
+        />
+        <skinnedMesh
+          name="Eyebrows"
+          geometry={nodes.Eyebrows.geometry}
+          material={materials.head}
+          skeleton={nodes.Eyebrows.skeleton}
+          position={[0, -0.86104661, 0]}
+        />
+        <skinnedMesh
+          name="Hair"
+          geometry={nodes.Hair.geometry}
+          material={materials.HairTop}
+          skeleton={nodes.Hair.skeleton}
+          position={[0, -0.86104661, 0]}
+        />
         <group name="Head" position={[0, -0.86104661, 0]}>
           <skinnedMesh name="Plane" geometry={nodes.Plane.geometry} material={materials.head} skeleton={nodes.Plane.skeleton} />
           <skinnedMesh name="Plane_1" geometry={nodes.Plane_1.geometry} material={materials.Beard} skeleton={nodes.Plane_1.skeleton} />
         </group>
-        <skinnedMesh name="SideHair" geometry={nodes.SideHair.geometry} material={materials.Hair} skeleton={nodes.SideHair.skeleton} position={[0, -0.86104661, 0]} />
-        <skinnedMesh name="Teethb" geometry={nodes.Teethb.geometry} material={materials.head} skeleton={nodes.Teethb.skeleton} position={[0, -0.86104661, 0]} />
-        <skinnedMesh name="Teetht" geometry={nodes.Teetht.geometry} material={materials.head} skeleton={nodes.Teetht.skeleton} position={[0, -0.86104661, 0]}>
+        <skinnedMesh
+          name="SideHair"
+          geometry={nodes.SideHair.geometry}
+          material={materials.Hair}
+          skeleton={nodes.SideHair.skeleton}
+          position={[0, -0.86104661, 0]}
+        />
+        <skinnedMesh
+          name="Teethb"
+          geometry={nodes.Teethb.geometry}
+          material={materials.head}
+          skeleton={nodes.Teethb.skeleton}
+          position={[0, -0.86104661, 0]}
+        />
+        <skinnedMesh
+          name="Teetht"
+          geometry={nodes.Teetht.geometry}
+          material={materials.head}
+          skeleton={nodes.Teetht.skeleton}
+          position={[0, -0.86104661, 0]}
+        >
           <Outlines thickness={0.0005} color="#424242" />
         </skinnedMesh>
-        <skinnedMesh name="Tongue" geometry={nodes.Tongue.geometry} material={materials.head} skeleton={nodes.Tongue.skeleton} position={[0, -0.86104661, 0]} />
+        <skinnedMesh
+          name="Tongue"
+          geometry={nodes.Tongue.geometry}
+          material={materials.head}
+          skeleton={nodes.Tongue.skeleton}
+          position={[0, -0.86104661, 0]}
+        />
       </group>
     </group>
   );
