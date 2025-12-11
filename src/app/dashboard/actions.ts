@@ -17,7 +17,7 @@ export type DataUpdateRes = {
   data?: any;
 };
 
-export async function isAuthenticated(): Promise<Boolean> {
+export async function isAuthenticated(): Promise<boolean> {
   const session = await getServerSession();
   return session?.user?.email === process.env.GITHUB_EMAIL;
 }
