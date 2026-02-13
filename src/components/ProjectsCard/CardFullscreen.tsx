@@ -28,7 +28,7 @@ export const CardFullscreen = forwardRef(function CardFullscreen({}, ref: Forwar
             });
           });
         },
-        false
+        false,
       );
       gsap.to(closeRef.current, {
         opacity: 1,
@@ -53,7 +53,9 @@ export const CardFullscreen = forwardRef(function CardFullscreen({}, ref: Forwar
     createElement(type, props, children) {
       return (
         <React.Fragment key={props.key}>
-          {React.createElement(type, props, children)}
+          {["br", "hr", "img", "input", "link", "meta"].includes(type as string)
+            ? React.createElement(type, props)
+            : React.createElement(type, props, children)}
           {type === "h1" && (
             <div style={{ marginBlock: "50px 70px" }}>
               <div style={{ display: "flex" }}>
@@ -78,7 +80,7 @@ export const CardFullscreen = forwardRef(function CardFullscreen({}, ref: Forwar
       p: {
         component: ({ children, ...props }) => <h4 {...props}>{children}</h4>,
         props: {
-          style: { marginBlock: "20px", lineHeight: "normal" },
+          style: { lineHeight: "normal" },
         },
       },
       a: {
@@ -93,7 +95,7 @@ export const CardFullscreen = forwardRef(function CardFullscreen({}, ref: Forwar
         ),
         props: {
           style: {
-            marginBlock: "20px",
+            marginBlock: "10px",
             borderRadius: "10px",
             display: "block",
             height: "auto",
@@ -118,7 +120,16 @@ export const CardFullscreen = forwardRef(function CardFullscreen({}, ref: Forwar
         </MagneticButton>
       </div>
 
-      <video ref={videoRef} src={data?.trailerUrl} className={styles.videoFullscreen} playsInline loop muted autoPlay disablePictureInPicture />
+      <video
+        ref={videoRef}
+        src={data?.trailerUrl ? data.trailerUrl : undefined}
+        className={styles.videoFullscreen}
+        playsInline
+        loop
+        muted
+        autoPlay
+        disablePictureInPicture
+      />
 
       <div className={styles.fullscreenContent}>
         <div style={{ width: "80%", maxWidth: "1500px" }}>
