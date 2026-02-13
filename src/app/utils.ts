@@ -1,5 +1,4 @@
 import connectDB from "@/lib/connectDB";
-import { formatDate } from "@/lib/formatText";
 import { Achievements } from "@/models/Achievements";
 import { Assets } from "@/models/Assets";
 import { Jobs } from "@/models/Jobs";
@@ -22,11 +21,7 @@ export const getData = cache(async (extras: boolean): Promise<Data> => {
     .lean()
     .exec();
 
-  jobs
-    ?.sort((a, b) => {
-      return formatDate(a.date.start).getTime() - formatDate(b.date.start).getTime();
-    })
-    .reverse();
+  jobs?.sort((a, b) => (a.date?.start ?? 0) - (b.date?.start ?? 0)).reverse();
 
   const selected = await Projects.find({ selected: true, ...(!extras && { visible: true }) }, { _id: 0 })
     .lean()

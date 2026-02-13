@@ -1,13 +1,3 @@
-import { DateType } from "@/types";
-
-export function formatDate(d: DateType) {
-  if (d.length === 1) return new Date();
-
-  const month = new Date(Date.parse(d[0] + " 1, 2000")).getMonth();
-  const year = d[1] as number;
-  return new Date(year, month);
-}
-
 export function formatText(text: string) {
   text = text.replaceAll(/%A%/gi, getAge("2002/05/22"));
   text = text.replaceAll(/%G%/gi, getLocalGreeting());
@@ -42,7 +32,7 @@ export function formatTextToHtml(text: string) {
         "&nbsp;" +
         words[i].string +
         "</span>" +
-        (nextWordIsPunctuation ? "<span" + (words[i + 1].isHighlighted ? " class='accent'" : "") + ">" + words[i + 1].string + "</span>" : "")
+        (nextWordIsPunctuation ? "<span" + (words[i + 1].isHighlighted ? " class='accent'" : "") + ">" + words[i + 1].string + "</span>" : ""),
     );
     i += nextWordIsPunctuation ? 2 : 1;
   }

@@ -13,18 +13,13 @@ export type Data = {
   resumeLocation?: string;
 };
 
-export type Dates = { start: DateType; end: DateType };
-export type DateType = [Month, Year] | ["Present"];
-export type Month = "Jan" | "Feb" | "Mar" | "Apr" | "May" | "Jun" | "Jul" | "Aug" | "Sep" | "Oct" | "Nov" | "Dec";
-export type Year = number;
-
 export type Jobs = Job[];
 export type Job = {
   id?: string;
   company: string;
   position: string;
   type?: string;
-  date: Dates;
+  date: { start: number | null; end: number | null | "present" };
   description?: string;
   preview?: string;
   previewType?: "image" | "video";

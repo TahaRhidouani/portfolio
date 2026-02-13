@@ -3,12 +3,23 @@ import MagneticButton from "@/components/MagneticButton";
 import { MaskText } from "@/components/MaskText";
 import { Job } from "@/types";
 import { useGSAP } from "@gsap/react";
+import alpha from "color-alpha";
 import { gsap } from "gsap";
 import Image from "next/image";
 import { RefObject, useRef, useState } from "react";
 import { useMediaQuery } from "usehooks-ts";
 
-export function Card({ data, difference, changeIndex, stackRef }: { data: Job; difference: number; changeIndex: (change: number) => void; stackRef?: RefObject<HTMLElement | null> }) {
+export function Card({
+  data,
+  difference,
+  changeIndex,
+  stackRef,
+}: {
+  data: Job;
+  difference: number;
+  changeIndex: (change: number) => void;
+  stackRef?: RefObject<HTMLElement | null>;
+}) {
   const [showInfo, setShowInfo] = useState<boolean>(false);
   const [scrollbarVisible, setScrollbarVisible] = useState<boolean>(false);
 
@@ -16,7 +27,6 @@ export function Card({ data, difference, changeIndex, stackRef }: { data: Job; d
 
   const hasMoreInfo = "description" in data || "previewType" in data || "repoUrl" in data || "websiteUrl" in data;
   const descriptionEntries = data.description?.split(/\n?- /);
-  // const difference = position.key - position.index;
 
   if (difference !== 0 && showInfo) {
     setShowInfo(false);
@@ -84,7 +94,7 @@ export function Card({ data, difference, changeIndex, stackRef }: { data: Job; d
               setScrollbarVisible(descriptionBlock.current!.scrollHeight > descriptionBlock.current!.clientHeight);
             },
           },
-          "<"
+          "<",
         )
         .to(descriptionBlock.current, { opacity: 1, duration: 0.2 });
     } else {
@@ -101,7 +111,7 @@ export function Card({ data, difference, changeIndex, stackRef }: { data: Job; d
             opacity: 0,
             duration: 0.2,
           },
-          "<"
+          "<",
         )
         .to(descriptionBlock.current, {
           flex: 0,
@@ -167,7 +177,7 @@ export function Card({ data, difference, changeIndex, stackRef }: { data: Job; d
               gsap.set(card.current, { display: "none" });
             }
           },
-        }
+        },
       );
     } else {
       gsap.set(card.current, {
@@ -183,18 +193,15 @@ export function Card({ data, difference, changeIndex, stackRef }: { data: Job; d
     }
   });
 
-  function addAlpha(color: string, opacity: number) {
-    let transparency = Math.round(Math.min(Math.max(opacity || 1, 0), 1) * 255);
-    return color + transparency.toString(16).toUpperCase();
-  }
-
   return (
     <div
       ref={card}
       className={styles.card}
       style={{
         zIndex: 9999 - difference,
-        background: "linear-gradient(300deg, " + addAlpha(data.colors[0], 0.1) + ", " + addAlpha(data.colors[1], 0.1) + ", " + addAlpha(data.colors[2], 0.1) + "), #3f3f3f",
+        background: data.colors
+          ? `linear-gradient(300deg, ${alpha(data.colors[0], 0.1)}, ${alpha(data.colors[1], 0.1)}, ${alpha(data.colors[2], 0.1)}), #3f3f3f`
+          : "#3f3f3f",
       }}
       onClick={() => {
         if (difference === 0 && hasMoreInfo) {
@@ -212,7 +219,15 @@ export function Card({ data, difference, changeIndex, stackRef }: { data: Job; d
         data-smile-animation={true}
         style={{ pointerEvents: difference === 0 && hasMoreInfo ? "all" : "none" }}
       >
-        <Image ref={logo} className={styles.logo} width={500} height={500} draggable="false" src={"/api/jobs/" + data.id + "/logo"} alt={data.company} />
+        <Image
+          ref={logo}
+          className={styles.logo}
+          width={500}
+          height={500}
+          draggable="false"
+          src={"/api/jobs/" + data.id + "/logo"}
+          alt={data.company}
+        />
 
         <div
           style={{
@@ -240,7 +255,12 @@ export function Card({ data, difference, changeIndex, stackRef }: { data: Job; d
             <div style={{ display: "flex", translate: "-10px 0" }}>
               {data.repoUrl && (
                 <MaskText show={showInfo} duration={1.2}>
-                  <MagneticButton padding={"10px 15px"} borderRadius={"10px"} style={{ textDecoration: "underline", color: "white" }} href={data.repoUrl}>
+                  <MagneticButton
+                    padding={"10px 15px"}
+                    borderRadius={"10px"}
+                    style={{ textDecoration: "underline", color: "white" }}
+                    href={data.repoUrl}
+                  >
                     <h5>View Repository</h5>
                   </MagneticButton>
                 </MaskText>
@@ -248,7 +268,12 @@ export function Card({ data, difference, changeIndex, stackRef }: { data: Job; d
 
               {data.websiteUrl && (
                 <MaskText show={showInfo} duration={1.2}>
-                  <MagneticButton padding={"10px 15px"} borderRadius={"10px"} style={{ textDecoration: "underline", color: "white" }} href={data.websiteUrl}>
+                  <MagneticButton
+                    padding={"10px 15px"}
+                    borderRadius={"10px"}
+                    style={{ textDecoration: "underline", color: "white" }}
+                    href={data.websiteUrl}
+                  >
                     <h5>View Demo</h5>
                   </MagneticButton>
                 </MaskText>
@@ -290,7 +315,17 @@ export function Card({ data, difference, changeIndex, stackRef }: { data: Job; d
                           />
                         );
                       case "video":
-                        return <video src={"/api/jobs/" + data.id + "/preview"} style={{ width: "100%", height: "auto" }} playsInline loop muted autoPlay disablePictureInPicture />;
+                        return (
+                          <video
+                            src={"/api/jobs/" + data.id + "/preview"}
+                            style={{ width: "100%", height: "auto" }}
+                            playsInline
+                            loop
+                            muted
+                            autoPlay
+                            disablePictureInPicture
+                          />
+                        );
                       default:
                         return <></>;
                     }

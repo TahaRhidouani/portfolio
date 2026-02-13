@@ -1,4 +1,3 @@
-import type { Dates } from "@/types";
 import { ModelOptions, ReturnModelType, Severity, getModelForClass, prop } from "@typegoose/typegoose";
 import mongoose from "mongoose";
 
@@ -26,7 +25,7 @@ class JobsClass {
   type: string;
 
   @prop({ required: true })
-  date: Dates;
+  date: { start: number | null; end: number | null | "present" };
 
   @prop({ required: true })
   logo: string;
