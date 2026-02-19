@@ -12,7 +12,7 @@ export function Main({ data }: { data: Data }) {
   const [resumeLoading, setResumeLoading] = useState(false);
   const [openResumeEdit, setOpenResumeEdit] = useState(false);
 
-  const handleSave = async (values: any) => {
+  const handleSave = async (values: { position: string; theme: string }) => {
     setLoading(true);
     const res = await updateMainData({
       position: values.position,

@@ -1,7 +1,7 @@
 import { updateAchievements } from "@/app/dashboard/actions";
 import { useFileUpload } from "@/components/Dashboard/hooks/useFileUpload";
 import { generateId } from "@/lib/id";
-import { Data } from "@/types";
+import { Achievement, Data } from "@/types";
 import { CloseOutlined, PlusOutlined, SaveOutlined, SyncOutlined } from "@ant-design/icons";
 import { Button, Card, Collapse, Flex, Form, Input, Upload, message } from "antd";
 import { useState } from "react";
@@ -11,7 +11,9 @@ export function Achievements({ data }: { data: Data }) {
   const { handleUpload } = useFileUpload();
   const [loading, setLoading] = useState(false);
 
-  const [achievements, setAchievements] = useState<any[]>(
+  console.log(data);
+
+  const [achievements, setAchievements] = useState<(Achievement & { _key: string })[]>(
     data.achievements.map((a) => ({
       ...a,
       _key: generateId(),
@@ -19,7 +21,7 @@ export function Achievements({ data }: { data: Data }) {
     })),
   );
 
-  const updateItem = (index: number, field: string, value: any) => {
+  const updateItem = (index: number, field: keyof Achievement, value: string) => {
     setAchievements((prev) => {
       const newItems = [...prev];
       newItems[index] = { ...newItems[index], [field]: value };

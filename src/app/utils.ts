@@ -33,7 +33,7 @@ export const getData = cache(async (extras: boolean): Promise<Data> => {
     .exec();
   other?.sort((a, b) => a.order - b.order);
 
-  const achievements = await Achievements.find({}, { _id: 0, logo: 0 }).lean().exec();
+  const achievements = await Achievements.find({}, { _id: 0 }).lean().exec();
 
   const resumeLocation = await Assets.findOne({ name: "resume-location" }).lean().exec();
 

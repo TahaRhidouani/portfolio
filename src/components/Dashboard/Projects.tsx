@@ -7,9 +7,9 @@ import { SortableContext, arrayMove, useSortable, verticalListSortingStrategy } 
 import { CSS } from "@dnd-kit/utilities";
 import { Button, Card, Flex, Input, Switch, Table, Transfer, message } from "antd";
 import { TransferDirection } from "antd/es/transfer";
-import { useState } from "react";
+import { CSSProperties, ReactNode, useState } from "react";
 
-const DragRow = ({ children, style, ...props }: any) => {
+const DragRow = ({ children, style, ...props }: { children: ReactNode; style?: CSSProperties; [key: string]: any }) => {
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
     id: props["data-row-key"],
   });
@@ -63,7 +63,7 @@ export function Projects({ data }: { data: Data }) {
     setLoading((p) => ({ ...p, save: false }));
   };
 
-  const updateProjectField = (repoName: string, field: keyof Project, val: any) => {
+  const updateProjectField = (repoName: string, field: keyof Project, val: Project[keyof Project]) => {
     setProjects((prev) => prev.map((p) => (p.repoName === repoName ? { ...p, [field]: val } : p)));
   };
 

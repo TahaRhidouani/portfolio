@@ -21,7 +21,7 @@ export function Work({ data }: { data: Data }) {
     })),
   );
 
-  const updateJob = (index: number, field: string, value: any) => {
+  const updateJob = (index: number, field: keyof Job, value: Job[keyof Job]) => {
     setJobs((prev) => {
       const newJobs = [...prev];
       newJobs[index] = { ...newJobs[index], [field]: value };
@@ -29,7 +29,7 @@ export function Work({ data }: { data: Data }) {
     });
   };
 
-  const updateJobNested = (index: number, parent: string, childKey: string | number, value: any) => {
+  const updateJobNested = (index: number, parent: keyof Job, childKey: string | number, value: any) => {
     setJobs((prev) => {
       const newJobs = [...prev];
       const parentObj = (newJobs[index] as Record<string, any>)[parent] || {};

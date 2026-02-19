@@ -21,7 +21,7 @@ export function Homepage({ data }: { data: Data }) {
 
   ScrollTrigger.config({ ignoreMobileResize: true });
 
-  const lenisRef = useRef<any>(null);
+  const lenisRef = useRef<React.ComponentRef<typeof ReactLenis>>(null);
   useEffect(() => {
     function update(time: number) {
       lenisRef.current?.lenis?.raf(time * 1000);
@@ -32,7 +32,7 @@ export function Homepage({ data }: { data: Data }) {
     return () => {
       gsap.ticker.remove(update);
     };
-  });
+  }, []);
 
   return (
     <ReactLenis ref={lenisRef} autoRaf={false} root>
