@@ -19,7 +19,7 @@ export type DataUpdateRes = {
 
 export async function isAuthenticated(): Promise<boolean> {
   const session = await getServerSession();
-  return session?.user?.email === process.env.GITHUB_EMAIL;
+  return !!process.env.GITHUB_EMAIL && session?.user?.email === process.env.GITHUB_EMAIL;
 }
 
 export async function updateMainData(data: { theme: string; position: string }) {
@@ -231,7 +231,7 @@ export async function fetchProjects(): Promise<DataUpdateRes> {
     });
 
     if (response.ok) {
-      return "https://raw.githubusercontent.com/" + user + "/" + project + "/master/images/trailer.mp4";
+      return "https://raw.githubusercontent.com/" + user + "/" + project + "/" + branch + "/images/trailer.mp4";
     } else {
       return null;
     }

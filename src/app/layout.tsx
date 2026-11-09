@@ -19,6 +19,9 @@ export const metadata: Metadata = {
     openGraph: {images: "/icon/favicon-alt.png"},
 };
 
+// Pages read the database and env at request time, so nothing is prerendered at build
+export const dynamic = "force-dynamic";
+
 export const viewport: Viewport = {
     themeColor: "black",
 };

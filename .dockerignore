@@ -1,0 +1,15 @@
+.git
+.github
+.dockerignore
+Dockerfile
+README.md
+images
+**/node_modules
+**/.env*
+**/.DS_Store
+.next
+data
+github-api
+*.tsbuildinfo
+next-env.d.ts
+.eslintrc.json
