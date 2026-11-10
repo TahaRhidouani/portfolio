@@ -24,5 +24,23 @@ export const useFileUpload = () => {
     });
   };
 
-  return { handleUpload };
+  // Logos are shown as still images, so store new ones as WebP, at most 1024 px on the long side
+  const handleLogoUpload = async (file: RcFile): Promise<string | null> => {
+    const url = await handleUpload(file);
+    if (!url) return url;
+
+    const image = new Image();
+    image.src = url;
+    await image.decode();
+
+    const scale = Math.min(1, 1024 / Math.max(image.naturalWidth, image.naturalHeight));
+    const canvas = document.createElement("canvas");
+    canvas.width = Math.round(image.naturalWidth * scale);
+    canvas.height = Math.round(image.naturalHeight * scale);
+    canvas.getContext("2d")!.drawImage(image, 0, 0, canvas.width, canvas.height);
+
+    return canvas.toDataURL("image/webp", 0.9);
+  };
+
+  return { handleUpload, handleLogoUpload };
 };

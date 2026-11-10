@@ -9,7 +9,7 @@ import { useState } from "react";
 
 export function Work({ data }: { data: Data }) {
   const [messageApi, contextHolder] = message.useMessage();
-  const { handleUpload } = useFileUpload();
+  const { handleUpload, handleLogoUpload } = useFileUpload();
   const [loading, setLoading] = useState(false);
 
   const [jobs, setJobs] = useState<(Job & { _key: string })[]>(
@@ -101,7 +101,7 @@ export function Work({ data }: { data: Data }) {
                           showUploadList={{ showPreviewIcon: false }}
                           fileList={job.logo ? [{ uid: "-1", name: "logo", status: "done", url: job.logo }] : []}
                           beforeUpload={(f) => {
-                            handleUpload(f).then((url) => {
+                            handleLogoUpload(f).then((url) => {
                               if (url) updateJob(index, "logo", url);
                             });
                             return false;

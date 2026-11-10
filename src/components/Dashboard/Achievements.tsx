@@ -8,7 +8,7 @@ import { useState } from "react";
 
 export function Achievements({ data }: { data: Data }) {
   const [messageApi, contextHolder] = message.useMessage();
-  const { handleUpload } = useFileUpload();
+  const { handleLogoUpload } = useFileUpload();
   const [loading, setLoading] = useState(false);
 
   console.log(data);
@@ -75,7 +75,7 @@ export function Achievements({ data }: { data: Data }) {
                           showUploadList={{ showPreviewIcon: false }}
                           fileList={item.logo ? [{ uid: "-1", name: "logo", status: "done", url: item.logo }] : []}
                           beforeUpload={(f) => {
-                            handleUpload(f).then((url) => {
+                            handleLogoUpload(f).then((url) => {
                               if (url) updateItem(index, "logo", url);
                             });
                             return false;

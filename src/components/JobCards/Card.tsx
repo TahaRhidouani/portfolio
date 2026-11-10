@@ -224,6 +224,7 @@ export function Card({
           className={styles.logo}
           width={500}
           height={500}
+          sizes="(orientation: portrait) 21vh, (hover: none) 21vh, min(35vh, 490px)"
           draggable="false"
           src={"/api/jobs/" + data.id + "/logo"}
           alt={data.company}
