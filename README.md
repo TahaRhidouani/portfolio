@@ -23,7 +23,7 @@ Every push to `main` builds the image `ghcr.io/taharhidouani/portfolio` (tags `m
 | Variable | Purpose |
 | --- | --- |
 | `MONGODB_URI` | MongoDB connection string (database `portfolio`) |
-| `URL` | Site host without scheme, for example `taharhidouani.com` |
+| `URL` | Public site URL, for example `https://taharhidouani.com` |
 | `NEXTAUTH_URL` | Public site URL, for example `https://taharhidouani.com` |
 | `NEXTAUTH_SECRET` | Random string that signs dashboard sessions |
 | `GITHUB_ID`, `GITHUB_SECRET` | GitHub OAuth app for the dashboard sign-in |

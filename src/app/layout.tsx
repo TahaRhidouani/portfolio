@@ -15,8 +15,8 @@ export const metadata: Metadata = {
             media: "(prefers-color-scheme: dark)",
         },
     ],
-    metadataBase: new URL(("https://" + process.env.URL) as string),
-    openGraph: {images: "/icon/favicon-alt.png"},
+    metadataBase: process.env.URL ? new URL(process.env.URL) : undefined,
+    openGraph: {images: "/assets/icons/favicon-alt.png"},
 };
 
 // Pages read the database and env at request time, so nothing is prerendered at build

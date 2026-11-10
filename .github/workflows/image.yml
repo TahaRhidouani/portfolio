@@ -65,7 +65,7 @@ jobs:
           docker run -d --name mongo --network smoke -e GLIBC_TUNABLES=glibc.pthread.rseq=1 mongo:8.0.34
           docker run -d --name app --network smoke -p 127.0.0.1:8080:8080 \
             -e MONGODB_URI=mongodb://mongo:27017/portfolio \
-            -e URL=localhost \
+            -e URL=http://127.0.0.1:8080 \
             "$IMAGE_REF"
           trap 'docker logs app' EXIT
           ready() {
