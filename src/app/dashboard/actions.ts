@@ -1,5 +1,6 @@
 "use server";
 
+import { clearPublicData } from "@/app/utils";
 import connectDB from "@/lib/connectDB";
 import { Achievements } from "@/models/Achievements";
 import { Assets } from "@/models/Assets";
@@ -16,6 +17,12 @@ export type DataUpdateRes = {
   message: string;
   data?: any;
 };
+
+// Show a change on the public page right away
+function contentChanged() {
+  clearPublicData();
+  revalidatePath("/", "layout");
+}
 
 export async function isAuthenticated(): Promise<boolean> {
   const session = await getServerSession();
@@ -51,6 +58,7 @@ export async function updateMainData(data: { theme: string; position: string }) 
     return { error: true, message: e.message };
   }
 
+  contentChanged();
   return { error: false, message: "Successfully saved" };
 }
 
@@ -77,7 +85,7 @@ export async function updateResumeLocation(location: string): Promise<DataUpdate
   if ((await fetchResume()).error) {
     return { error: true, message: "An error occured while refetching" };
   } else {
-    revalidatePath("/", "layout");
+    contentChanged();
     return { error: false, message: "Successfully saved & refetched" };
   }
 }
@@ -116,7 +124,7 @@ export async function fetchResume(): Promise<DataUpdateRes> {
     return { error: true, message: e.message };
   }
 
-  revalidatePath("/", "layout");
+  contentChanged();
   return { error: false, message: "Successfully refetched" };
 }
 
@@ -133,7 +141,7 @@ export async function updateAboutMe(text: string): Promise<DataUpdateRes> {
     return { error: true, message: e.message };
   }
 
-  revalidatePath("/", "layout");
+  contentChanged();
   return { error: false, message: "Successfully saved" };
 }
 
@@ -154,7 +162,7 @@ export async function updateJobData(jobs: JobsType): Promise<DataUpdateRes> {
     await Jobs.deleteMany({});
     await Jobs.insertMany(jobDocs);
 
-    revalidatePath("/", "layout");
+    contentChanged();
     return { error: false, message: "Successfully saved" };
   } catch (e: any) {
     return { error: true, message: `Update failed: ${e.message}` };
@@ -301,7 +309,7 @@ export async function fetchProjects(): Promise<DataUpdateRes> {
   const projects = await Projects.find({}, { _id: 0 }).lean().exec();
   projects.sort((a, b) => a.order - b.order);
 
-  revalidatePath("/", "layout");
+  contentChanged();
   return { error: false, message: "Successfully fetched", data: projects };
 }
 
@@ -340,7 +348,7 @@ export async function updateProjects(selected: ProjectsType, other: ProjectsType
     return { error: true, message: e.message };
   }
 
-  revalidatePath("/", "layout");
+  contentChanged();
   return { error: false, message: "Successfully saved" };
 }
 
@@ -368,6 +376,6 @@ export async function updateAchievements(achievements: AchievementsType): Promis
     return { error: true, message: e.message };
   }
 
-  revalidatePath("/", "layout");
+  contentChanged();
   return { error: false, message: "Successfully saved" };
 }

@@ -6,6 +6,26 @@ import { Projects } from "@/models/Projects";
 import { Data } from "@/types";
 import { cache } from "react";
 
+declare global {
+  var publicData: { data: Promise<Data>; expires: number } | undefined;
+}
+
+// The public page shows the same data to every visitor, so it is kept for 5 minutes.
+// Dashboard actions call clearPublicData() so their changes show at once.
+export function getPublicData(): Promise<Data> {
+  if (!global.publicData || global.publicData.expires < Date.now()) {
+    const data = getData(false);
+    global.publicData = { data, expires: Date.now() + 5 * 60 * 1000 };
+    data.catch(() => clearPublicData());
+  }
+
+  return global.publicData.data;
+}
+
+export function clearPublicData() {
+  global.publicData = undefined;
+}
+
 export const getData = cache(async (extras: boolean): Promise<Data> => {
   await connectDB();
 

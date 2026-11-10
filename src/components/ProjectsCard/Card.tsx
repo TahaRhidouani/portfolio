@@ -4,7 +4,7 @@ import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { Flip } from "gsap/all";
 import { useLenis } from "lenis/react";
-import { useContext, useRef } from "react";
+import { useContext, useEffect, useRef } from "react";
 import { useMediaQuery } from "usehooks-ts";
 import styles from "./style.module.css";
 
@@ -17,6 +17,7 @@ export function Card({ data }: { data: Project }) {
   const wrapRef = useRef<HTMLDivElement>(null);
   const ref = useRef<HTMLDivElement>(null);
   const isFullscreen = useRef<boolean>(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
 
   const isMobile = useMediaQuery("(orientation: portrait) or (hover: none)");
 
@@ -122,6 +123,20 @@ export function Card({ data }: { data: Project }) {
     return () => window.removeEventListener("resize", resizeCard);
   });
 
+  // Load and play the trailer only while the card is on screen
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video || !data.trailerUrl) return;
+
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) video.play().catch(() => {});
+      else video.pause();
+    });
+    observer.observe(video);
+
+    return () => observer.disconnect();
+  }, [data.trailerUrl]);
+
   return (
     <div ref={wrapRef} className={styles.cardWrap}>
       <div
@@ -138,7 +153,7 @@ export function Card({ data }: { data: Project }) {
             <br />
             <h5 className={"secondary"}>{data.description}</h5>
           </div>
-          <video className={styles.video} playsInline loop muted autoPlay disablePictureInPicture>
+          <video ref={videoRef} className={styles.video} playsInline loop muted preload="none" disablePictureInPicture>
             <source src={data.trailerUrl} type="video/mp4" />
           </video>
         </div>
