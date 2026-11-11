@@ -38,7 +38,7 @@ export const getData = cache(async (extras: boolean): Promise<Data> => {
   const about = await Assets.findOne({ name: "about-me" }).lean().exec();
 
   const jobs = await Jobs.find({}, { _id: 0, ...(extras ? {} : { logo: 0, preview: 0 }) })
-    .lean()
+    .lean<Data["jobs"]>()
     .exec();
 
   jobs?.sort((a, b) => (a.date?.start ?? 0) - (b.date?.start ?? 0)).reverse();
